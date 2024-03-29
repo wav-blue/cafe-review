@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content">
+    <div class="title flex-column">
+        <div class="flex-row">
+        <img src="img/img_title.png" alt="title_image" width="350px" />
+        <form class="my-2 my-lg-0 flex-column" style="display:flex; flex-direction: column;" th:action="@{/}" method="get">
+            <div class="flex-column">
+                <h2 class="deco-title">카페<br/>
+                    어디로 갈까?</h2>
+                <hr/>
+                <button th:onclick="|location.href='@{members/new}'|" class="btn btn-outline-success my-2 my-sm-0">계정 등록</button>
+
+                <span class="sub">이미 회원이라면
+                    <a style="
+                            display:inline;
+                            text-decoration: underline;"
+                       class="sub" href="members/login">이쪽</a></span>
+            </div>
+        </form>
+        </div>
+
+        <div class="flex-row">
+            <div class="diagram">
+                <a href="about">사이트 소개</a><hr/>
+                <img src="img/icon/introduce-icon.png" alt="icon1" width="50px" />
+            </div>
+            <div class="diagram">
+                <a href="explore">피드 구경</a><hr/>
+                <img src="img/icon/message-icon.png" alt="icon1" width="50px" />
+            </div>
+            <div class="diagram">
+                <a href="search">검색</a><hr/>
+                <img src="img/icon/search-icon.png" alt="icon1" width="50px" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</html>
