@@ -16,7 +16,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // Spring Security 5.7.0-M2 부터 기존 WebSecurityConfigureAdapter 방식에서 SecurityFilterChain 으로 변경 권장
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // 인증이 필요한 요청폼 설정
@@ -33,7 +32,7 @@ public class SecurityConfig {
 
         http.authorizeRequests()
                 .mvcMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                .mvcMatchers("/", "/members/**", "/drink/**", "/images/**").permitAll()
+                .mvcMatchers("/", "/members/**", "/review", "/img/**").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
         ;

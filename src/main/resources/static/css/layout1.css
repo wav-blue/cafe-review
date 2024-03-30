@@ -1,0 +1,88 @@
+@font-face {
+  font-family: ng;
+  src: url(NanumGothic.eot);
+  src: local(※), url(NanumGothic.woff) format(‘woff’);
+}
+
+body {
+  /* font-family: "나눔고딕", "NanumGothic", ng; */
+  font-family: "Gothic A1", sans-serif;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+  margin: 0;
+}
+body {
+  min-height: 100%;
+}
+
+.footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+}
+.content {
+  margin-bottom: 100px;
+  margin-top: 50px;
+  margin-left: 2rem;
+  margin-right: 200px;
+}
+.title {
+  display: flex;
+}
+.deco-title {
+  font-weight: bold;
+}
+.search {
+  display: inline;
+}
+a {
+}
+a:hover {
+  /*링크를 방문한 이후*/
+  color: "yellow";
+}
+.flex-column {
+  margin: 2rem;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Bootstrap Navigation Overriding by Readiz */
+.navbar-default {
+  background-color: #e74c3c;
+}
+.sub {
+  color: lightgrey;
+}
+
+.diagram {
+  padding: 1rem 0rem;
+  width: 10rem;
+  height: 10rem;
+  margin: 1rem;
+  border: 1px solid grey;
+  text-align: center;
+}
+
+a:hover {
+  text-decoration: none;
+}
+.center {
+  text-align: center;
+}
+.text-rating {
+  color: yellow;
+}
