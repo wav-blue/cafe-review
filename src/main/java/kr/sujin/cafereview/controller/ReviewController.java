@@ -10,32 +10,36 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.sujin.cafereview.dto.ReviewFormDto;
-import kr.sujin.cafereview.entity.Member;
-import kr.sujin.cafereview.entity.Review;
+import kr.sujin.cafereview.dto.ReviewReadDto;
+import kr.sujin.cafereview.dto.ReviewSearchDto;
+import kr.sujin.cafereview.service.ReviewReadService;
 import kr.sujin.cafereview.service.ReviewService;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
+@RequestMapping("/review")
 @Controller
 @RequiredArgsConstructor
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final ReviewReadService reviewReadService;
 
     // 새로 리뷰 등록
-    @GetMapping(value = "/upload")
+    @GetMapping(value = "/new")
     public String createNewReviewForm(Model model){
         model.addAttribute("reviewFormDto", new ReviewFormDto());
         return "cafe/reviewCreateForm";
     }
 
-    @PostMapping(value = "/upload")
+    @PostMapping(value = "/new")
     public String createNewReview(@Valid ReviewFormDto reviewFormDto, BindingResult
                            bindingResult, Model model, @RequestParam("reviewImgFile")List<MultipartFile>
                            reviewImgFileList){
@@ -57,6 +61,34 @@ public class ReviewController {
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping(value = "")
+    public String findReviewWithPaging(Optional<Integer> page, Model model){
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
+        Page<ReviewReadDto> reviews = reviewReadService.getReviewWithPaging(pageable);
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("maxPage", 3);
+        return "explore/review";
+    }
+
+    @GetMapping(value = {"/search"})
+    public String drinkManage(ReviewSearchDto reviewSearchDto,
+        @RequestParam(value = "page",required = false)Optional<Integer> page, Model model){
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+        Page<ReviewReadDto> reviews =
+            reviewReadService.getReviewWithPagingBySearch(reviewSearchDto, pageable);
+        model.addAttribute("reviews", reviews);
+        // model.addAttribute("drinkSearchDto", drinkSearchDto);
+        // model.addAttribute("maxPage", 5);
+        return "explore/reviewSearch";
+    }
+
+    @GetMapping(value= "/item/{reviewId}")
+    public String getReviewDetail(Model model, @PathVariable("drinkId") Long drinkId){
+        // ReviewFormDto reviewFormDto = reviewService.getReviewDtl(drinkId);
+        // model.addAttribute("review", reviewFormDto);
+        return "explore/reviewDetail";
     }
 
     // @GetMapping(value = "/upload/{reviewId}")
@@ -96,22 +128,5 @@ public class ReviewController {
     //     return "redirect:/";
     // }
 
-    // @GetMapping(value = {"/search", "/search/{page}"})
-    // public String drinkManage(DrinkSearchDto drinkSearchDto,
-    //                           @PathVariable("page")Optional<Integer> page, Model model){
-    //     Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
-    //     Page<Drink> drinks =
-    //             drinkService.getAdminDrinkPage(drinkSearchDto, pageable);
-    //     model.addAttribute("drinks", drinks);
-    //     model.addAttribute("drinkSearchDto", drinkSearchDto);
-    //     model.addAttribute("maxPage", 5);
-    //     return "item/drinkMng";
-    // }
-
-    @GetMapping(value= "/item/{drinkId}")
-    public String drinkDtl(Model model, @PathVariable("drinkId") Long drinkId){
-        ReviewFormDto reviewFormDto = reviewService.getReviewDtl(drinkId);
-        model.addAttribute("review", reviewFormDto);
-        return "item/drinkDtl";
-    }
+    
 }

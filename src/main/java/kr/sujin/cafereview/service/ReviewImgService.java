@@ -32,7 +32,7 @@ public class ReviewImgService {
         if(!StringUtils.isEmpty(oriImgName)){
             imgName = fileService.uploadFile(uploadPath, oriImgName,
                     reviewImgFile.getBytes());
-            imgUrl = "/images/img/" + imgName;
+            imgUrl = "/img/uploads/" + imgName;
         }
         
         //상품 이미지 정보 저장
