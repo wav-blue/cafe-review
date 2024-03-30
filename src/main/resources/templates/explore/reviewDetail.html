@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout1}"
+>
+  <head>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+  </head>
+
+  <!-- 사용자 스크립트 추가 -->
+
+  <!-- 사용자 CSS 추가 -->
+  <th:block layout:fragment="css">
+    <style>
+      .mgb-15 {
+        margin-bottom: 15px;
+      }
+      .mgt-30 {
+        margin-top: 30px;
+      }
+      .mgt-50 {
+        margin-top: 50px;
+      }
+      .repImgDiv {
+        margin-right: 15px;
+        height: auto;
+        width: 50%;
+      }
+      .repImg {
+        width: 100%;
+        height: 400px;
+      }
+      .wd50 {
+        height: auto;
+        width: 50%;
+      }
+    </style>
+  </th:block>
+
+  <div layout:fragment="content" style="margin-left: 25%; margin-right: 25%">
+    <input type="hidden" id="reviewId" th:value="${review.id}" />
+
+    <div class="d-flex">
+      <div class="repImgDiv">
+        <img
+          th:src="${review.reviewImgDtoList[0].imgUrl}"
+          class="rounded repImg"
+          th:alt="${review.menuNm}"
+        />
+      </div>
+      <div class="wd50">
+        <span th:if="${review.id}" class="badge badge-primary mgb-15">
+          > 커피
+        </span>
+        <span th:if="${review.id}" class="badge badge-primary mgb-15">
+          스무디
+        </span>
+
+        <hr class="my-4" />
+        <div class="h5" th:text="${review.cafeNm}"></div>
+        <div class="h4" th:text="${review.menuNm}"></div>
+        <hr class="my-4" />
+
+        <button type="button" class="btn btn-success">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-bookmarks"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1z"
+            ></path>
+            <path
+              d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1"
+            ></path>
+          </svg>
+          북마크
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          th:onclick="|location.href='@{/review/edit/{reviewId}(reviewId=${review.id})}'|"
+        >
+          수정하기
+        </button>
+      </div>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid mgt-30">
+      <div class="container">
+        <h4 class="display-5">상세 리뷰</h4>
+        <hr class="my-4" />
+        <p class="lead" th:text="${review.reviewDetail}"></p>
+      </div>
+    </div>
+
+    <div th:each="reviewImg : ${review.reviewImgDtoList}" class="text-center">
+      <img
+        th:if="${not #strings.isEmpty(reviewImg.imgUrl)}"
+        th:src="${reviewImg.imgUrl}"
+        class="rounded mgb-15"
+        width="800"
+      />
+    </div>
+  </div>
+</html>

@@ -82,7 +82,7 @@
 
       <div class="input-group">
         <div class="input-group-prepend">
-          <span class="input-group-text">메뉴 이름</span>
+          <span class="input-group-text">추천 메뉴</span>
         </div>
         <input
           type="text"
@@ -196,8 +196,7 @@
         <button
           th:formaction="@{/review/new}"
           type="submit"
-          class="btn btn-primary"
-          style="background-color: green"
+          class="btn btn-outline-success btn-lg"
         >
           저장
         </button>
@@ -209,8 +208,7 @@
         <button
           th:formaction="@{'/review/edit/' + ${reviewFormDto.id}}"
           type="submit"
-          class="btn btn-primary"
-          style="background-color: green"
+          class="btn btn-outline-success btn-lg"
         >
           수정
         </button>

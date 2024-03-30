@@ -95,7 +95,7 @@
         <th:block th:each="reviewContent, status: ${reviews.getContent()}">
             <div class="col-md-4 margin">
                 <div class="card">
-                    <a th:href="'/item/' +${reviewContent.id}" class="text-dark">
+                    <a th:href="'/review/' +${reviewContent.id}" class="text-dark">
                         <img th:src="${reviewContent.imgUrl}" class="card-img-top" th:alt="${reviewContent.menuNm}" height="200">
                         <div class="card-body">
                             <h4 class="card-title">[[${reviewContent.menuNm}]]</h4>

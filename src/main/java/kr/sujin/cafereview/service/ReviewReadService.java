@@ -24,21 +24,4 @@ public class ReviewReadService {
     public Page<ReviewReadDto> getReviewWithPagingBySearch(ReviewSearchDto reviewSearchDto, Pageable pageable){
         return reviewRepository.getReviewWithPagingBySearch(reviewSearchDto, pageable);
     }
-
-    // //정보 업데이트
-    // public Long updateItem(ReviewFormDto reviewFormDto, List<MultipartFile> reviewImgFileList) throws Exception{
-    //     //수정
-    //     Review review = reviewRepository.findOneById(reviewFormDto.getId())
-    //             .orElseThrow(EntityNotFoundException::new);
-    //     review.updateReview(reviewFormDto);
-
-    //     List<Long> reviewImgIds = reviewFormDto.getReviewImgIds();
-    //     //이미지 등록
-    //     for(int i = 0; i < reviewImgFileList.size(); i++){
-    //         reviewImgService.updateReviewImg(reviewImgIds.get(i), reviewImgFileList.get(i));
-    //     }
-
-    //     return review.getId();
-    // }
-
 }
