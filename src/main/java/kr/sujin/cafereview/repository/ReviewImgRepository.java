@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ReviewImgRepository extends JpaRepository<ReviewImg, Long> {
 
-    List<ReviewImg> findByIdOrderByIdAsc(Long id);
+    List<ReviewImg> findByReviewIdOrderByIdAsc(Long reviewId);
 
 }

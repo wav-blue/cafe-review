@@ -29,7 +29,7 @@ public class ReviewFormDto {
 
     private CafeRegion cafeRegion;
 
-    //음료를 저장한 후 수정할 때 이미지 정보를 저장하는 리스트
+    //음료를 저장한 후 수정할 때 이미지 정보를 저장
     private List<ReviewImgDto> reviewImgDtoList = new ArrayList<>();
 
     private List<Long> reviewImgIds = new ArrayList<>();

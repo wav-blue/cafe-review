@@ -52,7 +52,7 @@ public class ReviewImgService {
             String oriImgName = reviewImgFile.getOriginalFilename();
             String imgName = fileService.uploadFile(uploadPath,
                     oriImgName, reviewImgFile.getBytes());
-            String imgUrl = "/images/img/" + imgName;
+            String imgUrl = "/img/uploads/" + imgName;
             savedReviewImg.updateReviewImg(oriImgName, imgName, imgUrl);
         }
     }

@@ -1,11 +1,15 @@
 package kr.sujin.cafereview.dto;
 
 import kr.sujin.cafereview.entity.ReviewImg;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.modelmapper.ModelMapper;
 
 //음료 이미지에 대한 데이터를 전달
 
+@Setter
+@Getter
 public class ReviewImgDto {
 
     private static ModelMapper modelMapper = new ModelMapper();

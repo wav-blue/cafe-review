@@ -183,7 +183,7 @@
             />
             <label
               class="custom-file-label"
-              th:text="${not #strings.isEmpty(reviewImgDto.oriImgName)} ? ${reviewImgDto.oriImgName} : '상품이미지' + ${status.index+1}"
+              th:text="${not #strings.isEmpty(reviewImgDto.oriImgName)} ? ${reviewImgDto.oriImgName} : '상품이미지'"
             ></label>
           </div>
         </div>
@@ -200,6 +200,19 @@
           style="background-color: green"
         >
           저장
+        </button>
+      </div>
+      <div
+        th:unless="${#strings.isEmpty(reviewFormDto.id)}"
+        style="text-align: center"
+      >
+        <button
+          th:formaction="@{'/review/edit/' + ${reviewFormDto.id}}"
+          type="submit"
+          class="btn btn-primary"
+          style="background-color: green"
+        >
+          수정
         </button>
       </div>
       <input
