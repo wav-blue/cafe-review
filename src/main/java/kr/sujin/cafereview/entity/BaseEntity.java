@@ -17,7 +17,7 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @Setter
 @Where(clause = "deletedAt = null")
-public class BaseEntity extends BaseTimeEntity {
+public class BaseEntity {
     @CreatedBy
     @Column(updatable = false)
     private String createdAt;

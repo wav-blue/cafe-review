@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.SQLDelete;
 
-import kr.sujin.cafereview.constant.DrinkType;
+import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.dto.ReviewFormDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,16 +34,16 @@ public class Review extends BaseEntity{
 
     @Lob
     @Column(nullable = false)
-    private String drinkDetail; //세부 감상
+    private String reviewDetail; //세부 감상
 
-    @Enumerated(EnumType.STRING)
-    private DrinkType drinkType; // 메뉴 종류
+    @Column(nullable = false, length = 100)
+    private CafeRegion cafeRegion; // 카페 지역
 
     public void updateReview(ReviewFormDto reviewFormDto){
         this.cafeNm = reviewFormDto.getCafeNm();
         this.menuNm = reviewFormDto.getMenuNm();
         this.rating = reviewFormDto.getRating();
-        this.drinkDetail = reviewFormDto.getDrinkDetail();
-        this.drinkType = reviewFormDto.getDrinkType();
+        this.reviewDetail = reviewFormDto.getReviewDetail();
+        this.cafeRegion = reviewFormDto.getCafeRegion();
     }
 }
