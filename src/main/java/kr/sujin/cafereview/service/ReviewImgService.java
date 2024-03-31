@@ -23,7 +23,7 @@ public class ReviewImgService {
 
     private final FileService fileService;
 
-    public void saveReviewImg(ReviewImg reviewImg, MultipartFile reviewImgFile) throws Exception{
+    public String saveReviewImg(ReviewImg reviewImg, MultipartFile reviewImgFile) throws Exception{
         String oriImgName = reviewImgFile.getOriginalFilename();
         String imgName = "";
         String imgUrl = "";
@@ -38,6 +38,8 @@ public class ReviewImgService {
         //상품 이미지 정보 저장
         reviewImg.updateReviewImg(oriImgName, imgName, imgUrl);
         reviewImgRepository.save(reviewImg);
+
+        return imgUrl;
     }
 
     public void updateReviewImg(Long reviewImgId, MultipartFile reviewImgFile) throws Exception{
