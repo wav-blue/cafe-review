@@ -24,6 +24,9 @@ public class Review extends BaseEntity{
     private long id;
 
     @Column(nullable = false, length = 100)
+    private String email; //작성자 이메일
+
+    @Column(nullable = false, length = 100)
     private String cafeNm; //카페이름
 
     @Column(nullable = false, length = 100)
@@ -40,6 +43,7 @@ public class Review extends BaseEntity{
     private CafeRegion cafeRegion; // 카페 지역
 
     public void updateReview(ReviewFormDto reviewFormDto){
+        this.email = reviewFormDto.getEmail();
         this.cafeNm = reviewFormDto.getCafeNm();
         this.menuNm = reviewFormDto.getMenuNm();
         this.rating = reviewFormDto.getRating();

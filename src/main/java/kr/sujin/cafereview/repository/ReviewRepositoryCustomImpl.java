@@ -11,25 +11,23 @@ import org.thymeleaf.util.StringUtils;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import kr.sujin.cafereview.constant.CafeRegion;
-import kr.sujin.cafereview.dto.QReviewReadDto;
 import kr.sujin.cafereview.dto.ReviewReadDto;
+import kr.sujin.cafereview.dto.ReviewReadRandomDto;
 import kr.sujin.cafereview.dto.ReviewSearchDto;
 import kr.sujin.cafereview.entity.QReview;
 import kr.sujin.cafereview.entity.QReviewImg;
-import kr.sujin.cafereview.entity.Review;
+import kr.sujin.cafereview.dto.QReviewReadDto;
+import kr.sujin.cafereview.dto.QReviewReadRandomDto;
 
 public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     private JPAQueryFactory queryFactory;
 
     public ReviewRepositoryCustomImpl(EntityManager em){
         this.queryFactory = new JPAQueryFactory(em);
-    }
-
-    private BooleanExpression reviewNmLike(String searchQuery){
-        return StringUtils.isEmpty(searchQuery) ? null: QReview.review.cafeNm.like("%" + searchQuery + "%");
     }
 
     @Override
@@ -108,7 +106,32 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
 
         List<ReviewReadDto> content = results.getResults();
         long total = results.getTotal();
+        System.out.println(pageable);
         return new PageImpl<>(content, pageable, total);
     }
 
+    @Override
+    public List<ReviewReadRandomDto> getReviewByRandom(Integer count){
+        QReview review = QReview.review;
+        QReviewImg reviewImg = QReviewImg.reviewImg;
+
+        QueryResults<ReviewReadRandomDto> results = queryFactory
+        .select(
+            new QReviewReadRandomDto(
+                review.id,
+                review.cafeNm,
+                reviewImg.imgUrl
+            )
+        )
+        .from(reviewImg)
+        .join(reviewImg.review, review)
+        .where(reviewImg.repimgYn.eq("Y"))
+        .orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc())
+        .limit(count)
+        .fetchResults();
+
+
+        List<ReviewReadRandomDto> content = results.getResults();
+        return content;
+    }
 }

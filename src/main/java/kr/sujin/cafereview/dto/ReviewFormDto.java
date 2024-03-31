@@ -19,6 +19,8 @@ import lombok.Setter;
 public class ReviewFormDto {
     private Long id;
 
+    private String email;
+
     private String cafeNm;
 
     private String menuNm;

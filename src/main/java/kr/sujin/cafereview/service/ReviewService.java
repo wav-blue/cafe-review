@@ -20,11 +20,11 @@ import java.util.List;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewImgService reviewImgService;
-    private final ReviewReadService reviewReadService;
-    private final ReviewImgRepository reviewImgRepository;
 
     public Long saveReview(ReviewFormDto reviewFormDto,
-                             List<MultipartFile> reviewImgFileList) throws Exception{
+                             List<MultipartFile> reviewImgFileList, String email) throws Exception{
+        reviewFormDto.setEmail(email);
+
         // 리뷰 등록
         Review review = reviewFormDto.createReview();
         reviewRepository.save(review);

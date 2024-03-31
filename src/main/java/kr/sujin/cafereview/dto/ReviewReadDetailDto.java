@@ -25,6 +25,11 @@ public class ReviewReadDetailDto {
 
     private CafeRegion cafeRegion;
 
+    // 작성자 정보
+    private String email;
+
+    private String writerName;
+
     //이미지 정보
     private List<ReviewImgDto> reviewImgDtoList = new ArrayList<>();
 

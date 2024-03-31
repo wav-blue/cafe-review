@@ -8,6 +8,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.sujin.cafereview.dto.MemberReadWriterDto;
 import kr.sujin.cafereview.dto.ReviewImgDto;
 import kr.sujin.cafereview.dto.ReviewReadDetailDto;
 import kr.sujin.cafereview.entity.Review;
@@ -22,9 +23,14 @@ public class ReviewReadDetailService {
     
     private final ReviewRepository reviewRepository;
     private final ReviewImgRepository reviewImgRepository;
+    private final MemberReadService memberReadService;
 
     @Transactional(readOnly = true)
     public ReviewReadDetailDto getReviewDetail(Long reviewId){
+
+        // Review 조회
+        Review review = reviewRepository.findById(reviewId).orElseThrow(EntityNotFoundException::new);
+        ReviewReadDetailDto reviewReadDetailDto = ReviewReadDetailDto.of(review);
 
         // ReviewImg 조회
         List<ReviewImg> reviewImgList = reviewImgRepository.findByReviewIdOrderByIdAsc(reviewId);
@@ -33,11 +39,19 @@ public class ReviewReadDetailService {
             ReviewImgDto reviewImgDto = ReviewImgDto.of(reviewImg);
             reviewImgDtoList.add(reviewImgDto);
         }
-
-        // Review 조회
-        Review review = reviewRepository.findById(reviewId).orElseThrow(EntityNotFoundException::new);
-        ReviewReadDetailDto reviewReadDetailDto = ReviewReadDetailDto.of(review);
         reviewReadDetailDto.setReviewImgDtoList(reviewImgDtoList);
+
+        // 작성자 조회
+        var writerEmail = reviewReadDetailDto.getEmail();
+
+        MemberReadWriterDto writer = memberReadService.getMemberWriterByEmail(writerEmail);
+        System.out.println(writer);
+        reviewReadDetailDto.setWriterName(writer.getName());
+
         return reviewReadDetailDto;
+    }
+
+    public Boolean checkReviewWriter(String email){
+        return true;
     }
 }
