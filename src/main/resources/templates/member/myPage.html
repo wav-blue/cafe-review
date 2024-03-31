@@ -53,5 +53,12 @@
     <div class="h4" th:text="${memberReadDto.address}"></div>
     <hr class="my-4" />
     <button type="button" class="btn btn-outline-primary">비밀번호 변경</button>
+    <button
+      type="button"
+      class="btn btn-outline-success"
+      th:onclick="|location.href='@{/bookmark}'|"
+    >
+      북마크 목록
+    </button>
   </div>
 </html>

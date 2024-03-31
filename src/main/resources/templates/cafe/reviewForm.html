@@ -60,6 +60,7 @@
       <p class="h2">리뷰 등록</p>
 
       <input type="hidden" th:field="*{id}" />
+      <input type="hidden" th:field="*{email}" />
 
       <div class="input-group">
         <div class="input-group-prepend">
@@ -201,6 +202,7 @@
           저장
         </button>
       </div>
+
       <div
         th:unless="${#strings.isEmpty(reviewFormDto.id)}"
         style="text-align: center"

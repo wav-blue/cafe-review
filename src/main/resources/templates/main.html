@@ -10,7 +10,7 @@
         <img
           th:src="@{/img/source/title_img.png}"
           alt="title_image"
-          width="350px"
+          style="height: 650px; width: 650px; margin:20px 0"
         />
         <form
           class="my-2 my-lg-0 flex-column"
@@ -19,47 +19,122 @@
           method="get"
         >
           <div class="flex-column">
-            <h2 class="deco-title">
-              카페<br />
-              어디로 갈까?
-            </h2>
-            <hr />
+            <h1 class="deco-title">
+              카페, 어디로 갈까?
+            </h1>
+            <br/>
+            <h4 class="deco-title">
+              카페 리뷰 탐방 사이트
+            </h4>
+            <br/>
+          <div 
+            sec:authorize="isAnonymous()">
             <button
-              th:onclick="|location.href='@{members/new}'|"
-              class="btn btn-outline-success my-2 my-sm-0"
-            >
-              계정 등록
-            </button>
+            type="button"
+            class="btn btn-outline-success my-2 my-sm-0"
+            th:onclick="|location.href='@{/members/login}'|"
+          >
+            로그인
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-success my-2 my-sm-0"
+            th:onclick="|location.href='@{/members/new}'|"
+          >
+            계정 등록
+          </button>
 
-            <span class="sub"
-              >이미 회원이라면
-              <a
-                style="display: inline; text-decoration: underline"
-                class="sub"
-                href="members/login"
-                >이쪽</a
-              ></span
-            >
+          <hr />
+          <br/>
+
+            <div>
+              <img src="img/source/search-icon.png" alt="icon1" width="30px" style="margin: 0px 3px;" />
+              <span class="h5">로그인 후 원하는 리뷰를 검색해 보세요!</ㄴ>
+            </div>
+            <br/>
+            <div class="row">
+              <th:block th:each="review, status: ${reviews}">
+                  <div class="col-md-4 margin">
+                    <a th:href="'/review/' +${review.id}" class="text-dark">
+                      <p th:text="${review.cafeNm}"></p>
+                      <img th:src="${review.imgUrl}" class="card-img-top img-thumbnail" th:alt="random_user_image" height="100">
+                      
+                    </a>
+                  </div>
+              </th:block>
+          </div>
+            <div class="flex-row">
+              <div class="diagram">
+                <a href="about">사이트 소개</a>
+                <hr />
+                <img src="img/source/introduce-icon.png" alt="icon1" width="50px" />
+              </div>
+              <div class="diagram">
+                <a href="/review">피드 구경</a>
+                <hr />
+                <img src="img/source/message-icon.png" alt="icon1" width="50px" />
+              </div>
+            </div>
+          </div>
+          <div 
+            sec:authorize="isAuthenticated()">
+            <button
+            type="button"
+            class="btn btn-outline-success my-2 my-sm-0"
+            th:onclick="|location.href='@{/bookmark}'|"
+          >
+            북마크 목록
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-success my-2 my-sm-0"
+            th:onclick="|location.href='@{/review/new}'|"
+          >
+            리뷰 등록
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-success my-2 my-sm-0"
+            th:onclick="|location.href='@{/review/search}'|"
+          >
+            리뷰 검색
+          </button>
+          
+
+          <hr/>
+
+            <div>
+              <img src="img/source/search-icon.png" alt="icon1" width="30px" style="margin: 0px 3px;" />
+              <span class="h5">오늘의 리뷰입니다!</span>
+            </div>
+            <br/>
+            <div class="row">
+              <th:block th:each="review, status: ${reviews}">
+                  <div class="col-md-4 margin">
+                    <a th:href="'/review/' +${review.id}" class="text-dark">
+                      <p th:text="${review.cafeNm}"></p>
+                      <img th:src="${review.imgUrl}" class="card-img-top img-thumbnail" th:alt="random_user_image" height="100">
+                      
+                    </a>
+                  </div>
+              </th:block>
+          </div>
+            <div class="flex-row">
+              <div class="diagram">
+                <a href="about">사이트 소개</a>
+                <hr />
+                <img src="img/source/introduce-icon.png" alt="icon1" width="50px" />
+              </div>
+              <div class="diagram">
+                <a href="/review">피드 구경</a>
+                <hr />
+                <img src="img/source/message-icon.png" alt="icon1" width="50px" />
+              </div>
+            </div>
+          </div>  
+            
           </div>
         </form>
-      </div>
-
-      <div class="flex-row">
-        <div class="diagram">
-          <a href="about">사이트 소개</a>
-          <hr />
-          <img src="img/source/introduce-icon.png" alt="icon1" width="50px" />
-        </div>
-        <div class="diagram">
-          <a href="/review">피드 구경</a>
-          <hr />
-          <img src="img/source/message-icon.png" alt="icon1" width="50px" />
-        </div>
-        <div class="diagram">
-          <a href="/review/search">검색</a>
-          <hr />
-          <img src="img/source/search-icon.png" alt="icon1" width="50px" />
-        </div>
       </div>
     </div>
   </div>
