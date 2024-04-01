@@ -70,10 +70,10 @@ a:hover {
 
 .diagram {
   padding: 1rem 0rem;
-  width: 10rem;
+  width: 20rem;
   height: 10rem;
-  margin: 1rem;
-  border: 1px solid grey;
+  margin: 1.5rem 2rem;
+  border: 0px solid grey;
   text-align: center;
 }
 
@@ -84,5 +84,21 @@ a:hover {
   text-align: center;
 }
 .text-rating {
-  color: yellow;
+  color: rgb(240, 221, 13);
+  font-weight: 700;
+}
+
+.navbar-nav > li > a {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: large;
+  margin: 0 3rem;
+}
+
+.card {
+  width: 25rem;
+}
+
+.card-img-top {
+  height: 18rem;
 }

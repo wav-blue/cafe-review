@@ -57,7 +57,7 @@
                   <div class="col-md-4 margin">
                     <a th:href="'/review/' +${review.id}" class="text-dark">
                       <p th:text="${review.cafeNm}"></p>
-                      <img th:src="${review.imgUrl}" class="card-img-top img-thumbnail" th:alt="random_user_image" height="100">
+                      <img th:src="${review.imgUrl}" class="card-img-top img-thumbnail" th:alt="random_user_image">
                       
                     </a>
                   </div>
@@ -104,16 +104,16 @@
           <hr/>
 
             <div>
-              <img src="img/source/search-icon.png" alt="icon1" width="30px" style="margin: 0px 3px;" />
+              <img src="img/source/search-icon.png" alt="icon1" style="margin: 0px 3px;" width = "28px"/>
               <span class="h5">오늘의 리뷰입니다!</span>
             </div>
             <br/>
             <div class="row">
               <th:block th:each="review, status: ${reviews}">
-                  <div class="col-md-4 margin">
+                  <div class="col-md-4 margin" >
                     <a th:href="'/review/' +${review.id}" class="text-dark">
                       <p th:text="${review.cafeNm}"></p>
-                      <img th:src="${review.imgUrl}" class="card-img-top img-thumbnail" th:alt="random_user_image" height="100">
+                      <img th:src="${review.imgUrl}" class="img-thumbnail" style="width: 270px; height: 150px" th:alt="user_image">
                       
                     </a>
                   </div>

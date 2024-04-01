@@ -70,6 +70,6 @@ public class BookmarkController {
         Page<BookmarkReadDto> bookmarks = bookmarkReadService.readBookmarkWithPaging(email, pageable);
         model.addAttribute("bookmarks", bookmarks);
         model.addAttribute("maxPage", 3);
-        return "member/bookmark";
+        return "member/bookmarkList";
     }
 }
