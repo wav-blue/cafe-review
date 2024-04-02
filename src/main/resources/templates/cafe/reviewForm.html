@@ -208,7 +208,7 @@
         style="text-align: center"
       >
         <button
-          th:formaction="@{'/review/edit/' + ${reviewFormDto.id}}"
+          th:formaction="@{'/review/' + ${reviewFormDto.id} + '/edit'}"
           type="submit"
           class="btn btn-outline-success btn-lg"
         >
