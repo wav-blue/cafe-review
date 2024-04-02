@@ -11,5 +11,7 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long>,
 QuerydslPredicateExecutor<Bookmark>, BookmarkRepositoryCustom {
     List<Bookmark> findByUserEmail(String email);
 
+    Bookmark getBookmarkById(Long bookmarkId);
+
     Bookmark findByReviewId(Long reviewId);
 }
