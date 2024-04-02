@@ -4,10 +4,13 @@ package kr.sujin.cafereview.entity;
 import javax.persistence.*;
 
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.dto.ReviewFormDto;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -16,7 +19,8 @@ import lombok.ToString;
 @Entity
 @Table(name="review_item")
 @ToString
-@SQLDelete(sql = "UPDATE review_item SET deletedAt = current_timestamp WHERE id = ?")
+@Where(clause = "deleted_date IS NULL")
+@SQLDelete(sql = "UPDATE review_item SET deleted_date = NOW() WHERE review_id = ?")
 public class Review extends BaseEntity{
     @Id
     @Column(name="review_id")

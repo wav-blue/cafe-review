@@ -5,26 +5,28 @@ import lombok.Setter;
 
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
-@EntityListeners(value = {AuditingEntityListener.class})
-@MappedSuperclass
 @Getter
 @Setter
-@Where(clause = "deletedAt = null")
+@MappedSuperclass
+@EntityListeners(value = {AuditingEntityListener.class})
 public class BaseEntity {
-    @CreatedBy
-    @Column(updatable = false)
-    private String createdAt;
+    @CreatedDate
+    private LocalDateTime createdDate;
 
-    @LastModifiedBy
-    private String updatedAt;
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
 
     @Column()
-    private String deletedAt;
+    private LocalDateTime deletedDate;
 }

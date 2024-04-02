@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-public class Bookmark {
+public class Bookmark extends BaseEntity {
     @Id
     @Column(name="bookmark_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,12 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,11 +40,35 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 public class ReviewController {
-
     private final ReviewService reviewService;
     private final ReviewReadService reviewReadService;
     private final ReviewUpdateService reviewUpdateService;
     private final ReviewReadDetailService reviewReadDetailService;
+
+    // 현재 접속 중인 유저의 이메일
+    private String getUserEmail(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String userEmail = userDetails.getUsername();
+
+        return userEmail;
+    }
+
+    // 본인이 작성한 리뷰인지 확인
+    private Boolean checkWriter(String writerEmail){
+        Boolean isWriter = false;
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String userEmail = userDetails.getUsername();
+        
+
+        if(userEmail.equals(writerEmail)){
+            isWriter = true;
+        };
+
+        return isWriter;
+    }
 
     // 새로 리뷰 등록
     @GetMapping(value = "/new")
@@ -51,7 +78,7 @@ public class ReviewController {
     }
 
     @PostMapping(value = "/new")
-    public String postCreateReviewForm(@Valid ReviewFormDto reviewFormDto, BindingResult
+    public String createReview(@Valid ReviewFormDto reviewFormDto, BindingResult
                            bindingResult, Model model, @RequestParam("reviewImgFile")List<MultipartFile>
                            reviewImgFileList){
         if(bindingResult.hasErrors()){
@@ -97,7 +124,7 @@ public class ReviewController {
     }
 
     // 수정할 데이터 조회
-    @GetMapping(value = "/edit/{reviewId}")
+    @GetMapping(value = "/{reviewId}/edit")
     public String getUpdateReviewForm(@PathVariable("reviewId") Long reviewId, Model model){
 
         try{
@@ -111,8 +138,8 @@ public class ReviewController {
         return "cafe/reviewForm";
     }
 
-    @PostMapping(value = "/edit/{reviewId}")
-    public String postUpdateReviewForm(@Valid ReviewFormDto reviewFormDto, BindingResult bindingResult, @RequestParam("reviewImgFile") List<MultipartFile> reviewImgFileList, Model model) {
+    @PostMapping(value = "/{reviewId}/edit")
+    public String updateReview(@Valid ReviewFormDto reviewFormDto, BindingResult bindingResult, @RequestParam("reviewImgFile") List<MultipartFile> reviewImgFileList, Model model) {
         if(bindingResult.hasErrors()){
             return "cafe/reviewForm";
         } 
@@ -132,45 +159,29 @@ public class ReviewController {
     // 상세 데이터 조회
     @GetMapping(value = "/{reviewId}")
     public String getReviewDetail(@PathVariable("reviewId") Long reviewId, Model model){
-        // 리뷰 정보 조회
-        try{
-            ReviewReadDetailDto reviewReadDetailDto = reviewReadDetailService.getReviewDetail(reviewId);
-            model.addAttribute("review", reviewReadDetailDto);
+       
+        ReviewReadDetailDto reviewReadDetailDto = reviewReadDetailService.getReviewDetail(reviewId);
+        model.addAttribute("review", reviewReadDetailDto);
 
-            Boolean isWriter = checkWriter(reviewReadDetailDto.getEmail());
-            model.addAttribute("isWriter", isWriter);
-        } catch (EntityNotFoundException e){
-            model.addAttribute("errorMessage", "존재하지 않는 리뷰입니다.");
-            model.addAttribute("review", new ReviewReadDetailDto());
-            
-            return "explore/reviewDetail";
-        }
+        Boolean isWriter = checkWriter(reviewReadDetailDto.getEmail());
+        model.addAttribute("isWriter", isWriter);
 
         return "explore/reviewDetail";
     }
 
-    // 현재 접속 중인 유저의 이메일
-    private String getUserEmail(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String userEmail = userDetails.getUsername();
+    // 리뷰 삭제 처리
+    @DeleteMapping(value = "/{reviewId}")
+    public ResponseEntity deleteReview(@PathVariable("reviewId") Long reviewId, Model model) {
+        // deletedAt 컬럼 업데이트
+        try{
+            reviewService.deleteReview(reviewId);
+        } catch (EntityNotFoundException e){
+            System.out.println("e");
+            System.out.println(e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
 
-        return userEmail;
+        return new ResponseEntity<String>("Complete", HttpStatus.NO_CONTENT);
     }
-
-    // 본인이 작성한 리뷰인지 확인
-    private Boolean checkWriter(String writerEmail){
-        Boolean isWriter = false;
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String userEmail = userDetails.getUsername();
-        
-
-        if(userEmail.equals(writerEmail)){
-            isWriter = true;
-        };
-        
-        return isWriter;
-    }
+    
 }

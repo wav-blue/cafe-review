@@ -22,7 +22,7 @@ import kr.sujin.cafereview.entity.QReview;
 import kr.sujin.cafereview.entity.QReviewImg;
 import kr.sujin.cafereview.dto.QReviewReadDto;
 import kr.sujin.cafereview.dto.QReviewReadRandomDto;
-
+import java.time.LocalDateTime;
 public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     private JPAQueryFactory queryFactory;
 
@@ -49,6 +49,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
         ).from(reviewImg)
         .join(reviewImg.review, review)
         .where(reviewImg.repimgYn.eq("Y"))
+        .where(review.deletedDate.isNull())
         .orderBy(review.id.desc())
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
@@ -99,6 +100,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
         .join(reviewImg.review, review)
         .where(reviewImg.repimgYn.eq("Y"))
         .where(searchByKeyword(reviewSearchDto), searchCafeRegion(reviewSearchDto.getRegion()))
+        .where(review.deletedDate.isNull())
         .orderBy(review.id.desc())
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
@@ -126,6 +128,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
         .from(reviewImg)
         .join(reviewImg.review, review)
         .where(reviewImg.repimgYn.eq("Y"))
+        .where(review.deletedDate.isNull())
         .orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc())
         .limit(count)
         .fetchResults();
@@ -133,5 +136,16 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
 
         List<ReviewReadRandomDto> content = results.getResults();
         return content;
+    }
+
+    @Override
+    public void deleteByReviewId(Long reviewId){
+        QReview review = QReview.review;
+
+        long execute = queryFactory
+        .update(review)
+        .set(review.deletedDate, LocalDateTime.now())
+        .where(review.id.eq(reviewId))
+        .execute();
     }
 }

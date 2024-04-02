@@ -40,4 +40,9 @@ public class ReviewService {
         return review.getId();
     }
 
+    public void deleteReview(Long reviewId){
+        Review review = reviewRepository.getReviewById(reviewId);
+        // reviewRepository.deleteByReviewId(reviewId);
+        reviewRepository.delete(review);
+    }
 }

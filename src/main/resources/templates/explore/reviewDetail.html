@@ -48,6 +48,39 @@
           },
         });
       }
+
+      // 리뷰 삭제
+      function deleteReview() {
+        alert("삭제!");
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        var reviewId = $("#reviewId").val();
+        var url = `/review/${reviewId}`;
+
+        $.ajax({
+          url: url,
+          type: "DELETE",
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader(header, token);
+          },
+          cache: false,
+          success: function (result, status) {
+            alert("삭제가 완료되었습니다.");
+          },
+          error: function (jqXHR, status, error) {
+            console.log(jqXHR);
+            if (jqXHR.status == "401") {
+              alert("로그인이 필요합니다");
+              location.href = "/members/login";
+            } else if (jqXHR.status == "409" || jqXHR.status == "404") {
+              alert("존재하지 않는 리뷰입니다.");
+            } else {
+              alert(jqXHR.responseText);
+            }
+          },
+        });
+      }
     </script>
   </th:block>
 
@@ -129,10 +162,18 @@
           <button
             type="button"
             class="btn btn-outline-primary"
-            th:onclick="|location.href='@{/review/edit/{reviewId}(reviewId=${review.id})}'|"
+            th:onclick="|location.href='@{/review/{reviewId}/edit(reviewId=${review.id})}'|"
             th:if="${isWriter==true}"
           >
             수정하기
+          </button>
+          <button
+            type="button"
+            onclick="deleteReview()"
+            class="btn btn-outline-primary"
+            th:if="${isWriter==true}"
+          >
+            삭제하기
           </button>
         </div>
       </div>
