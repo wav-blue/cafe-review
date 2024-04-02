@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -16,19 +17,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.sujin.cafereview.dto.BookmarkCreateDto;
 import kr.sujin.cafereview.dto.BookmarkReadDto;
-import kr.sujin.cafereview.entity.Review;
 import kr.sujin.cafereview.service.BookmarkCreateService;
+import kr.sujin.cafereview.service.BookmarkDeleteService;
 import kr.sujin.cafereview.service.BookmarkReadService;
-import kr.sujin.cafereview.service.ReviewReadService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RequestMapping("/bookmark")
@@ -38,28 +40,19 @@ public class BookmarkController {
 
     private final BookmarkCreateService bookmarkCreateService;
     private final BookmarkReadService bookmarkReadService;
-    private final ReviewReadService reviewReadService;
+    private final BookmarkDeleteService bookmarkDeleteService;
 
     @PostMapping(value = "/new")
-    public ResponseEntity postCreateReviewForm(@RequestBody @Valid BookmarkCreateDto bookmarkCreateDto, BindingResult bindingResult, Principal principal){
-        // if(bindingResult.hasErrors()){
-        //     return "cafe/reviewForm";
-        // }
+    public ResponseEntity<Long> postCreateReviewForm(@RequestBody @Valid BookmarkCreateDto bookmarkCreateDto, Principal principal){
 
         String email = principal.getName();
-        Long reviewId = bookmarkCreateDto.getReviewId();
         
-        try{
-            Review review = reviewReadService.getReview(reviewId);
-            reviewId = bookmarkCreateService.addBookmark(bookmarkCreateDto, email, review);
-        } catch (Exception e){
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        Long reviewId = bookmarkCreateService.addBookmark(bookmarkCreateDto, email);
 
         return new ResponseEntity<Long>(reviewId, HttpStatus.OK);
     }
 
-    @GetMapping(value = "")
+    @GetMapping(value = "/my")
     public String getBookmarkWithPaging(Optional<Integer> page, Model model){
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() - 1 : 0, 6);
 
@@ -71,5 +64,19 @@ public class BookmarkController {
         model.addAttribute("bookmarks", bookmarks);
         model.addAttribute("maxPage", 3);
         return "member/bookmarkList";
+    }
+
+    // 북마크 삭제 처리
+    @DeleteMapping(value = "/my/{bookmarkId}")
+    public ResponseEntity<String> deleteBookmark(@PathVariable("bookmarkId") Long bookmarkId, Model model) {
+        try{
+            bookmarkDeleteService.deleteBookmark(bookmarkId);
+        } catch (EntityNotFoundException e){
+            System.out.println("e");
+            System.out.println(e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<String>("Complete", HttpStatus.NO_CONTENT);
     }
 }

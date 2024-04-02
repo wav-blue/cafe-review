@@ -6,6 +6,8 @@ import kr.sujin.cafereview.entity.Review;
 import kr.sujin.cafereview.repository.BookmarkRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 @Service
@@ -13,16 +15,22 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class BookmarkCreateService {
     private final BookmarkRepository bookmarkRepository;
+    private final ReviewReadService reviewReadService;
 
-    public Long addBookmark(BookmarkCreateDto bookmarkCreateDto, String email, Review review){
+    public Long addBookmark(BookmarkCreateDto bookmarkCreateDto, String email){
         
-        Bookmark bookmark = bookmarkRepository.findByReviewId(bookmarkCreateDto.getReviewId());
+        Long reviewId = bookmarkCreateDto.getReviewId();
+        Review review = reviewReadService.getReview(reviewId);
+
+        Optional<Bookmark> bookmark = bookmarkRepository.findByReviewIdAndUserEmail(bookmarkCreateDto.getReviewId(), email);
+
         System.out.println(bookmark);
-        if(bookmark == null){
-            Bookmark newBookmark = Bookmark.createBookmark(bookmarkCreateDto, email, review);
-            System.out.println(newBookmark);
-            bookmarkRepository.save(newBookmark);
+        if(bookmark.isPresent()){
+            throw new IllegalStateException("이미 북마크된 리뷰입니다.");
         }
+
+        Bookmark newBookmark = Bookmark.createBookmark(bookmarkCreateDto, email, review);
+        bookmarkRepository.save(newBookmark);
 
         return bookmarkCreateDto.getReviewId();
     }

@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -41,8 +43,9 @@ public class ReviewService {
     }
 
     public void deleteReview(Long reviewId){
-        Review review = reviewRepository.getReviewById(reviewId);
-        // reviewRepository.deleteByReviewId(reviewId);
+        Review review = reviewRepository.getReviewById(reviewId)
+        .orElseThrow(EntityNotFoundException::new);;
+        
         reviewRepository.delete(review);
     }
 }

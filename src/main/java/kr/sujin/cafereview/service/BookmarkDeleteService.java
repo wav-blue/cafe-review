@@ -2,6 +2,8 @@ package kr.sujin.cafereview.service;
 
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +17,7 @@ public class BookmarkDeleteService {
     private final BookmarkRepository bookmarkRepository;
 
     public void deleteBookmark(Long bookmarkId){
-        try{
-            Bookmark bookmark = bookmarkRepository.getBookmarkById(bookmarkId);
-            bookmarkRepository.delete(bookmark);
-        } catch(Exception e){
-            // 삭제 중 문제 발생
-        }
-        ;
+        Bookmark bookmark = bookmarkRepository.getBookmarkById(bookmarkId).orElseThrow(EntityNotFoundException::new);
+        bookmarkRepository.delete(bookmark);
     }
 }

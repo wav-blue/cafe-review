@@ -20,7 +20,6 @@ import kr.sujin.cafereview.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ReviewUpdateService {
     @Value("${uploadPath}")
@@ -51,7 +50,7 @@ public class ReviewUpdateService {
     }
 
     // 이미지 수정
-    @Transactional(readOnly = true)
+    @Transactional
     public void updateReviewImg(Long reviewImgId, MultipartFile reviewImgFile) throws Exception{
 
         if(!reviewImgFile.isEmpty()){

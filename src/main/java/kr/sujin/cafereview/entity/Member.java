@@ -3,6 +3,7 @@ package kr.sujin.cafereview.entity;
 import kr.sujin.cafereview.constant.Role;
 import kr.sujin.cafereview.dto.MemberFormDto;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -23,17 +24,19 @@ public class Member extends BaseEntity {
     @GenericGenerator(name="uuid2", strategy="uuid2")
     private String id;
 
+    @NonNull
     private String name;
 
+    @NonNull
     @Column(unique = true)
     private String email;
 
+    @NonNull
     private String password;
 
     private String address;
 
-    private String nickname; //입력 정보에 닉네임 추가
-
+    @NonNull
     @Enumerated(EnumType.STRING)
     private Role role;
 

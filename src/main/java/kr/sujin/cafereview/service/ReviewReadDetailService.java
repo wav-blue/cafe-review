@@ -17,6 +17,7 @@ import kr.sujin.cafereview.repository.ReviewImgRepository;
 import kr.sujin.cafereview.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class ReviewReadDetailService {
@@ -25,13 +26,13 @@ public class ReviewReadDetailService {
     private final ReviewImgRepository reviewImgRepository;
     private final MemberReadService memberReadService;
 
-    @Transactional(readOnly = true)
     public ReviewReadDetailDto getReviewDetail(Long reviewId){
-
+        
+        ReviewReadDetailDto reviewReadDetailDto;
+    
         // Review 조회
         Review review = reviewRepository.findById(reviewId).orElseThrow(EntityNotFoundException::new);
-        ReviewReadDetailDto reviewReadDetailDto = ReviewReadDetailDto.of(review);
-
+        reviewReadDetailDto = ReviewReadDetailDto.of(review);
         // ReviewImg 조회
         List<ReviewImg> reviewImgList = reviewImgRepository.findByReviewIdOrderByIdAsc(reviewId);
         List<ReviewImgDto> reviewImgDtoList = new ArrayList<>();

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.sujin.cafereview.dto.ReviewFormDto;
 import kr.sujin.cafereview.dto.ReviewReadDetailDto;
 import kr.sujin.cafereview.dto.ReviewReadDto;
-import kr.sujin.cafereview.dto.ReviewReadRandomDto;
 import kr.sujin.cafereview.dto.ReviewSearchDto;
 import kr.sujin.cafereview.service.ReviewReadDetailService;
 import kr.sujin.cafereview.service.ReviewReadService;
@@ -33,6 +33,7 @@ import kr.sujin.cafereview.service.ReviewUpdateService;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 

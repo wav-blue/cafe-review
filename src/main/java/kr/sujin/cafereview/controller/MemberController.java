@@ -7,6 +7,8 @@ import kr.sujin.cafereview.service.MemberReadService;
 import kr.sujin.cafereview.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,11 +45,11 @@ public class MemberController {
         try {
             Member member = Member.createMember(memberFormDto, passwordEncoder);
             memberService.saveMember(member);
-        } catch (IllegalStateException e){ //중복 회원 가입
+        } catch (IllegalStateException e){ 
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
         }
-        return "main";
+        return "redirect:/";
     }
 
     @GetMapping(value = "/login")

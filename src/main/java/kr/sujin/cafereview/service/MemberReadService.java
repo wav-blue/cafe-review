@@ -5,31 +5,36 @@ import kr.sujin.cafereview.dto.MemberReadWriterDto;
 import kr.sujin.cafereview.entity.Member;
 import kr.sujin.cafereview.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberReadService{
 
     private final MemberRepository memberRepository;
 
     public MemberReadDto getMemberByEmail(String email){
-        Member member = memberRepository.findByEmail(email);
+        Member member = memberRepository.findByEmail(email)
+        .orElseThrow(EntityNotFoundException::new);;
 
         MemberReadDto memberReadDto = MemberReadDto.of(member);
         return memberReadDto;
     }
 
     public MemberReadWriterDto getMemberWriterByEmail(String email){
-        System.out.println("email");
-        System.out.println(email);
         // Review 작성자 조회
-        MemberReadWriterDto memberReadWriterDto = memberRepository.findWriterByEmail(email);
+        Member member = memberRepository.findByEmail(email)
+        .orElseThrow(EntityNotFoundException::new);
+
+        MemberReadWriterDto memberReadWriterDto = MemberReadWriterDto.of(member);
 
         return memberReadWriterDto;
     }
 
+    
 }

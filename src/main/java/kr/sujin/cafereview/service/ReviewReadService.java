@@ -1,6 +1,9 @@
 package kr.sujin.cafereview.service;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,13 +17,18 @@ import kr.sujin.cafereview.entity.Review;
 import kr.sujin.cafereview.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 
+@Transactional(readOnly = true)
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ReviewReadService {
     private final ReviewRepository reviewRepository;
+    
+    public Review getReview(Long reviewId){
+        Review review = reviewRepository.getReviewById(reviewId)
+        .orElseThrow(EntityNotFoundException::new);
+        return review;
+    }
 
-    @Transactional(readOnly = true)
     public Page<ReviewReadDto> getReviewWithPaging(Pageable pageable){
         return reviewRepository.getReviewWithPaging(pageable);
     }
@@ -33,7 +41,4 @@ public class ReviewReadService {
         return reviewRepository.getReviewByRandom(count);
     }
 
-    public Review getReview(Long reviewId){
-        return reviewRepository.getReviewById(reviewId);
-    }
 }
