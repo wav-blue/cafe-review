@@ -2,17 +2,23 @@ package kr.sujin.cafereview.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
+
 import javax.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.sujin.cafereview.dto.BookmarkCreateDto;
+import kr.sujin.cafereview.dto.BookmarkReadDto;
 import kr.sujin.cafereview.entity.Bookmark;
 import kr.sujin.cafereview.repository.BookmarkRepository;
 
@@ -22,23 +28,23 @@ import kr.sujin.cafereview.repository.BookmarkRepository;
 public class BookmarkServiceTest {
 
     @Autowired
-    ReviewReadService reviewReadService;
-
-    @Autowired
     BookmarkRepository bookmarkRepository;
 
     @Autowired
     BookmarkCreateService bookmarkCreateService;
 
+    @Autowired
+    BookmarkReadService bookmarkReadService;
+
     @Test
     @DisplayName("북마크 추가 테스트")
-    @WithMockUser(username = "exam_admin@test.com", roles = "ADMIN")
+    @WithMockUser(username = "testEmail1@exam.com", roles = "ADMIN")
     void saveBookmark() throws Exception{
-        String userEmail = "exam_admin@test.com";
+        String userEmail = "testEmail1@exam.com";
 
         BookmarkCreateDto bookmarkCreateDto = new BookmarkCreateDto();
-        bookmarkCreateDto.setReviewId(Long.valueOf(19));
-        bookmarkCreateDto.setFirstImgUrl("/img/uploads/83973162-0658-4bcd-97fc-c21b48ba0a8b.jpg");
+        bookmarkCreateDto.setReviewId(Long.valueOf(22));
+        bookmarkCreateDto.setFirstImgUrl("/img/uploads/test_img.jpg");
 
         Long reviewId = bookmarkCreateService.addBookmark(bookmarkCreateDto, userEmail);
         
@@ -46,9 +52,28 @@ public class BookmarkServiceTest {
         Bookmark bookmark = bookmarkRepository.findByReviewIdAndUserEmail(reviewId, userEmail)
         .orElseThrow(EntityNotFoundException::new);
 
-        // reviewId 일치 확인
+        // 저장된 reviewId 일치 확인
         assertEquals(bookmarkCreateDto.getReviewId(), bookmark.getReview().getId());
         assertEquals(bookmarkCreateDto.getFirstImgUrl(), bookmark.getFirstImgUrl());
     }
     
+
+    @Test
+    @DisplayName("북마크 조회 테스트")
+    @WithMockUser(username = "testEmail2@exam.com", roles = "ADMIN")
+    void readBookmark() throws Exception{
+        String email = "testEmail2@exam.com";
+        //Pageable
+        Pageable pageable = PageRequest.of(0, 6);
+
+        Page<BookmarkReadDto> bookmarkReadDto 
+            = bookmarkReadService.readBookmarkWithPaging(email, pageable);
+
+        List<BookmarkReadDto> bookmarkContents = bookmarkReadDto.getContent();
+
+        assertEquals(27, bookmarkContents.get(0).getReviewId());
+        assertEquals(26, bookmarkContents.get(1).getReviewId());
+        assertEquals(25, bookmarkContents.get(2).getReviewId());
+        
+    }
 }
