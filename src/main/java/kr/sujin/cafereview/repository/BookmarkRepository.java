@@ -16,5 +16,5 @@ QuerydslPredicateExecutor<Bookmark>, BookmarkRepositoryCustom {
 
     Optional<Bookmark> findByReviewId(Long reviewId);
 
-    Optional<Bookmark> findByReviewIdAndUserEmail(Long reviewId, String email);
+    Optional<Bookmark> findByReviewIdAndUserEmail(Long reviewId, String userEmail);
 }
