@@ -22,6 +22,9 @@ import kr.sujin.cafereview.entity.QReview;
 import kr.sujin.cafereview.entity.QReviewImg;
 import kr.sujin.cafereview.dto.QReviewReadDto;
 import kr.sujin.cafereview.dto.QReviewReadRandomDto;
+import kr.sujin.cafereview.dto.ReviewReadAdminDto;
+import kr.sujin.cafereview.dto.QReviewReadAdminDto;
+
 import java.time.LocalDateTime;
 public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     private JPAQueryFactory queryFactory;
@@ -147,5 +150,28 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
         .set(review.deletedDate, LocalDateTime.now())
         .where(review.id.eq(reviewId))
         .execute();
+    }
+    
+    @Override
+    public Page<ReviewReadAdminDto> getReviewForAdminWithPagingBySearch(ReviewSearchDto reviewSearchDto, Pageable pageable){
+        QReview review = QReview.review;
+
+        List<ReviewReadAdminDto> content = queryFactory
+        .select(new QReviewReadAdminDto(
+            review.id,
+            review.email,
+            review.cafeNm,
+            review.menuNm,
+            review.deletedStatus
+        )
+        )
+        .from(review)
+        .offset(pageable.getOffset())
+        .limit(pageable.getPageSize())
+        .fetch();
+
+        long total = content.size();
+        System.out.println(total);
+        return new PageImpl<>(content, pageable, total);
     }
 }

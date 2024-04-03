@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout1}"
+>
+  <th:block layout:fragment="script">
+    <script th:inline="javascript">
+      $(document).ready(function () {
+        $("#searchBtn").on("click", function (e) {
+          e.preventDefault();
+          page(0);
+        });
+      });
+
+      function page(page) {
+        var searchBy = $("#searchBy").val();
+        var searchQuery = $("#searchQuery").val();
+
+        location.href =
+          "search/" +
+          page +
+          "?searchDrinkType=" +
+          searchDrinkType +
+          "&searchBy=" +
+          searchBy +
+          "&searchQuery=" +
+          searchQuery;
+      }
+    </script>
+  </th:block>
+
+  <th:block layout:fragment="css">
+    <style>
+      select {
+        margin-right: 10px;
+      }
+    </style>
+  </th:block>
+
+  <div layout:fragment="content">
+    <form
+      th:action="@{'/search/' +
+    ${reviews.number}}"
+      role="form"
+      method="get"
+      th:object="${reviews}"
+    >
+      <div
+        class="form-inline justify-content-center"
+        th:object="${reviewSearchDto}"
+      >
+        <select th:field="*{searchBy}" class="form-control" style="width: auto">
+          <option value="cafeNm">카페명</option>
+          <option value="menuNm">메뉴 이름</option>
+        </select>
+        <select th:field="*{region}" class="form-control" style="width: auto">
+          <option value="">전체</option>
+          <option value="SEOUL">서울</option>
+          <option value="GYEONGGI">경기</option>
+          <option value="DAEGU">대구</option>
+          <option value="INCHEON">인천</option>
+          <option value="DAEJEON">대전</option>
+          <option value="GWANGJU">경주</option>
+          <option value="ULSAN">울산</option>
+          <option value="SEJONG">세종</option>
+          <option value="CHUNGCHEONG">충청</option>
+          <option value="JEONLA">전라</option>
+          <option value="GYEONGSANG">경상</option>
+          <option value="GANGWON">강원</option>
+          <option value="JEONBUG">전북</option>
+          <option value="BUSAN">부산</option>
+          <option value="JEJU">제주</option>
+          <option value="ETC">기타</option>
+        </select>
+        <input
+          th:field="*{searchKeyword}"
+          type="text"
+          class="form-control"
+          placeholder="검색어를 입력해주세요"
+        />
+        <button
+          id="searchBtn"
+          type="submit"
+          class="btn btn-primary"
+          style="margin-left: 3px"
+        >
+          Search
+        </button>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <td>리뷰아이디</td>
+            <td>카페명</td>
+            <td>메뉴이름</td>
+            <td>작성자 이메일</td>
+            <td>리뷰 글 관리</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="review, status: ${reviews.getContent()}">
+            <td th:text="${review.id}"></td>
+            <td>
+              <a th:href="${review.id}" th:text="${review.cafeNm}"></a>
+            </td>
+            <td>
+              <a th:href="${review.id}" th:text="${review.menuNm}"></a>
+            </td>
+            <td>
+              <p th:text="${review.email}"></p>
+            </td>
+            <td>
+              <button
+                class="btn btn-warning btn-sm"
+                style="margin-left: 3px"
+                th:onclick="deleteReviewWarning()"
+              >
+                삭제
+              </button>
+            </td>
+            <td>
+              <p th:text="${review.deletedStatus}" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p th:text="reviews.number"></p>
+      <p th:text="${reviews.number}"></p>
+      <p th:text="maxPage"></p>
+      <p th:text="${maxPage}"></p>
+      <p th:text="reviews.totalPages"></p>
+      <p th:text="${reviews.totalPages}"></p>
+      <p th:text="reviews.number"></p>
+      <p th:text="${reviews.number}"></p>
+      <p th:text="${(reviews.number/maxPage)*maxPage + 1}"></p>
+      <div
+        th:with="start=${(reviews.number/maxPage)*maxPage + 1}, end=(${(reviews.totalPages == 0) ? 1 : (start + (maxPage - 1) < reviews.totalPages ? start + (maxPage - 1) : reviews.totalPages)})"
+      >
+        <ul class="pagination justify-content-center">
+          <li
+            class="page-item"
+            th:classappend="${reviews.number eq 0}?'disabled':''"
+          >
+            <a
+              th:href="@{'/review/search' + '?page=' + ${reviews.number}}"
+              aria-label="Previous"
+              class="page-link"
+            >
+              <span aria-hidden="true">Previous</span>
+            </a>
+          </li>
+
+          <li
+            class="page-item"
+            th:each="page: ${#numbers.sequence(start, end)}"
+            th:classappend="${reviews.number eq page-1}?'active':''"
+          >
+            <a
+              th:href="@{'/review/admin' + '?page=' + ${page}}"
+              th:inline="text"
+              class="page-link"
+              >[[${page}]]</a
+            >
+          </li>
+
+          <li
+            class="page-item"
+            th:classappend="${reviews.number+1 ge reviews.totalPages}?'disabled':''"
+          >
+            <a
+              th:href="@{'/review/search' + '?page=' + ${reviews.number+2}}"
+              aria-label="Next"
+              class="page-link"
+            >
+              <span aria-hidden="true">Next</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+</html>

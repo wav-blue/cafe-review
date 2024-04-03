@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.sujin.cafereview.dto.ReviewFormDto;
+import kr.sujin.cafereview.dto.ReviewReadAdminDto;
 import kr.sujin.cafereview.dto.ReviewReadDetailDto;
 import kr.sujin.cafereview.dto.ReviewReadDto;
 import kr.sujin.cafereview.dto.ReviewSearchDto;
@@ -119,7 +120,6 @@ public class ReviewController {
         Page<ReviewReadDto> reviews =
             reviewReadService.getReviewWithPagingBySearch(reviewSearchDto, pageable);
         model.addAttribute("reviews", reviews);
-        // model.addAttribute("drinkSearchDto", drinkSearchDto);
         model.addAttribute("maxPage", 3);
         return "explore/reviewSearch";
     }
@@ -185,4 +185,14 @@ public class ReviewController {
         return new ResponseEntity<String>("Complete", HttpStatus.NO_CONTENT);
     }
     
+    @GetMapping(value = "/admin")
+    public String getReviewWithPagingByAdmin(ReviewSearchDto reviewSearchDto, 
+        @RequestParam(value = "page",required = false)Optional<Integer> page, Model model){
+            Pageable pageable = PageRequest.of(page.isPresent() ? page.get() - 1 : 0, 2);
+            Page<ReviewReadAdminDto> reviews =
+                reviewReadService.getReviewForAdminWithPagingBySearch(reviewSearchDto, pageable);
+            model.addAttribute("reviews", reviews);
+            model.addAttribute("maxPage", 2);
+            return "admin/review";
+    }
 }

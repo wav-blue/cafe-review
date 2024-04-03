@@ -10,7 +10,6 @@ import lombok.Setter;
 public class ReviewReadRandomDto {
     private Long id;
 
-
     private String cafeNm;
 
     private String imgUrl;

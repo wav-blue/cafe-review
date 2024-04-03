@@ -8,53 +8,73 @@
       class="navbar navbar-expand-lg navbar-light bg-light"
       style="margin-top: 3rem"
     >
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarTogglerDemo03"
-        aria-controls="navbarTogglerDemo03"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <img
-        th:src="@{/img/source/main_icon.png}"
-        alt="icon"
-        width="45px"
-        style="margin: 0 10px"
-      />
-      <a class="navbar-brand" href="/" style="font-size: 25px">HOME</a>
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarTogglerDemo"
+          aria-controls="navbarTogglerDemo"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <img
+          th:src="@{/img/source/main_icon.png}"
+          alt="icon"
+          width="45px"
+          style="margin: 0 10px"
+        />
+        <a class="navbar-brand" href="/" style="font-size: 25px">HOME</a>
 
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="/about">소개</a>
-          </li>
-          <li class="nav-item" sec:authorize="isAuthenticated()">
-            <!--인증 회원-->
-            <a class="nav-link" href="/review/new">리뷰 등록</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/review">동네 구경</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/review/search">찾아보기</a>
-          </li>
-          <li class="nav-item" sec:authorize="isAnonymous()">
-            <!--비인증 회원-->
-            <a class="nav-link" href="/members/login">로그인</a>
-          </li>
-          <li class="nav-item" sec:authorize="isAuthenticated()">
-            <!--인증 회원-->
-            <a class="nav-link" href="/members/logout">로그아웃</a>
-          </li>
-          <li class="nav-item" sec:authorize="isAuthenticated()">
-            <!--인증 회원-->
-            <a class="nav-link" href="/members/my">MY</a>
-          </li>
-        </ul>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/about">소개</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+              <!--인증 회원-->
+              <a class="nav-link" href="/review/new">리뷰 등록</a>
+            </li>
+            <li class="nav-item">
+              <!--ADMIN-->
+              <a
+                class="nav-link"
+                sec:authorize="hasAnyAuthority('ROLE_ADMIN')"
+                href="/review/admin"
+                >게시글 관리</a
+              >
+            </li>
+            <li class="nav-item">
+              <!--ADMIN-->
+              <a
+                class="nav-link"
+                sec:authorize="hasAnyAuthority('ROLE_ADMIN')"
+                href="/member/admin"
+                >회원 관리</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/review">동네 구경</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/review/search">찾아보기</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAnonymous()">
+              <!--비인증 회원-->
+              <a class="nav-link" href="/members/login">로그인</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+              <!--인증 회원-->
+              <a class="nav-link" href="/members/logout">로그아웃</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+              <!--인증 회원-->
+              <a class="nav-link" href="/members/my">MY</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   </div>

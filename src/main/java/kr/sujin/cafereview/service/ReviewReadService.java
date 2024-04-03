@@ -1,7 +1,6 @@
 package kr.sujin.cafereview.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -10,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.sujin.cafereview.dto.ReviewReadAdminDto;
 import kr.sujin.cafereview.dto.ReviewReadDto;
 import kr.sujin.cafereview.dto.ReviewReadRandomDto;
 import kr.sujin.cafereview.dto.ReviewSearchDto;
@@ -41,4 +41,7 @@ public class ReviewReadService {
         return reviewRepository.getReviewByRandom(count);
     }
 
+    public Page<ReviewReadAdminDto> getReviewForAdminWithPagingBySearch(ReviewSearchDto reviewSearchDto, Pageable pageable){
+        return reviewRepository.getReviewForAdminWithPagingBySearch(reviewSearchDto, pageable);
+    }
 }
