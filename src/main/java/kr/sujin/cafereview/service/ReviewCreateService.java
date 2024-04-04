@@ -3,8 +3,8 @@ package kr.sujin.cafereview.service;
 import kr.sujin.cafereview.dto.ReviewFormDto;
 import kr.sujin.cafereview.entity.Review;
 import kr.sujin.cafereview.entity.ReviewImg;
-import kr.sujin.cafereview.repository.ReviewImgRepository;
 import kr.sujin.cafereview.repository.ReviewRepository;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -14,16 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ReviewService {
+public class ReviewCreateService {
     private final ReviewRepository reviewRepository;
     private final ReviewImgService reviewImgService;
 
-    public Long saveReview(ReviewFormDto reviewFormDto,
+    public Long createReview(ReviewFormDto reviewFormDto,
                              List<MultipartFile> reviewImgFileList, String email) throws Exception{
         reviewFormDto.setEmail(email);
 
@@ -41,11 +39,5 @@ public class ReviewService {
         }
         return review.getId();
     }
-
-    public void deleteReview(Long reviewId){
-        Review review = reviewRepository.getReviewById(reviewId)
-        .orElseThrow(EntityNotFoundException::new);;
-        
-        reviewRepository.delete(review);
-    }
 }
+
