@@ -26,15 +26,15 @@ import kr.sujin.cafereview.dto.ReviewReadAdminDto;
 import kr.sujin.cafereview.dto.ReviewReadDetailDto;
 import kr.sujin.cafereview.dto.ReviewReadDto;
 import kr.sujin.cafereview.dto.ReviewSearchDto;
+import kr.sujin.cafereview.service.ReviewCreateService;
+import kr.sujin.cafereview.service.ReviewDeleteService;
 import kr.sujin.cafereview.service.ReviewReadDetailService;
 import kr.sujin.cafereview.service.ReviewReadService;
-import kr.sujin.cafereview.service.ReviewService;
 import kr.sujin.cafereview.service.ReviewUpdateService;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -42,7 +42,8 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 public class ReviewController {
-    private final ReviewService reviewService;
+    private final ReviewCreateService reviewCreateService;
+    private final ReviewDeleteService reviewDeleteService;
     private final ReviewReadService reviewReadService;
     private final ReviewUpdateService reviewUpdateService;
     private final ReviewReadDetailService reviewReadDetailService;
@@ -95,7 +96,7 @@ public class ReviewController {
         String email = getUserEmail();
 
         try{
-            reviewService.saveReview(reviewFormDto, reviewImgFileList, email);
+            reviewCreateService.createReview(reviewFormDto, reviewImgFileList, email);
         } catch (Exception e){
             model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
             return "cafe/reviewForm";
@@ -175,7 +176,7 @@ public class ReviewController {
     public ResponseEntity deleteReview(@PathVariable("reviewId") Long reviewId, Model model) {
         // deletedAt 컬럼 업데이트
         try{
-            reviewService.deleteReview(reviewId);
+            reviewDeleteService.deleteReview(reviewId);
         } catch (EntityNotFoundException e){
             System.out.println("e");
             System.out.println(e);
@@ -193,6 +194,6 @@ public class ReviewController {
                 reviewReadService.getReviewForAdminWithPagingBySearch(reviewSearchDto, pageable);
             model.addAttribute("reviews", reviews);
             model.addAttribute("maxPage", 2);
-            return "admin/review";
+            return "admin/reviewManage";
     }
 }

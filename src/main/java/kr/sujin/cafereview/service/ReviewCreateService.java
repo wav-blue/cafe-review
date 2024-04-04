@@ -33,8 +33,8 @@ public class ReviewCreateService {
         for(int i = 0; i < reviewImgFileList.size(); i++){
             ReviewImg reviewImg = new ReviewImg();
             reviewImg.setReview(review);
-            if(i==0) reviewImg.setRepimgYn("Y"); //첫번째 이미지는 대표 이미지 값을 Y로 설정
-            else reviewImg.setRepimgYn("N");
+            if(i==0) reviewImg.setIsThumbnail(true); //첫번째 이미지는 대표 이미지 값을 Y로 설정
+            else reviewImg.setIsThumbnail(false);
             reviewImgService.saveReviewImg(reviewImg, reviewImgFileList.get(i));
         }
         return review.getId();

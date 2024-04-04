@@ -1,6 +1,7 @@
 package kr.sujin.cafereview.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
@@ -15,11 +16,13 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import kr.sujin.cafereview.constant.CafeRegion;
+import kr.sujin.cafereview.constant.DeletedStatus;
 import kr.sujin.cafereview.dto.ReviewReadDto;
 import kr.sujin.cafereview.dto.ReviewReadRandomDto;
 import kr.sujin.cafereview.dto.ReviewSearchDto;
 import kr.sujin.cafereview.entity.QReview;
 import kr.sujin.cafereview.entity.QReviewImg;
+import kr.sujin.cafereview.entity.Review;
 import kr.sujin.cafereview.dto.QReviewReadDto;
 import kr.sujin.cafereview.dto.QReviewReadRandomDto;
 import kr.sujin.cafereview.dto.ReviewReadAdminDto;
@@ -51,7 +54,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             )
         ).from(reviewImg)
         .join(reviewImg.review, review)
-        .where(reviewImg.repimgYn.eq("Y"))
+        .where(reviewImg.isThumbnail.isTrue())
         .where(review.deletedDate.isNull())
         .orderBy(review.id.desc())
         .offset(pageable.getOffset())
@@ -66,8 +69,6 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     // 리뷰 특정 키워드로 검색
     private BooleanExpression searchByKeyword(ReviewSearchDto reviewSearchDto){
         String searchBy = reviewSearchDto.getSearchBy();
-        System.out.println("searchBy : ");
-        System.out.println(searchBy);
         String searchKeyword = reviewSearchDto.getSearchKeyword();
 
         if(StringUtils.equals("cafeNm", searchBy)){
@@ -101,7 +102,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             )
         ).from(reviewImg)
         .join(reviewImg.review, review)
-        .where(reviewImg.repimgYn.eq("Y"))
+        .where(reviewImg.isThumbnail.isTrue())
         .where(searchByKeyword(reviewSearchDto), searchCafeRegion(reviewSearchDto.getRegion()))
         .where(review.deletedDate.isNull())
         .orderBy(review.id.desc())
@@ -130,7 +131,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
         )
         .from(reviewImg)
         .join(reviewImg.review, review)
-        .where(reviewImg.repimgYn.eq("Y"))
+        .where(reviewImg.isThumbnail.isTrue())
         .where(review.deletedDate.isNull())
         .orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc())
         .limit(count)
@@ -148,6 +149,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
         long execute = queryFactory
         .update(review)
         .set(review.deletedDate, LocalDateTime.now())
+        .set(review.deletedStatus, DeletedStatus.DELETED)
         .where(review.id.eq(reviewId))
         .execute();
     }
@@ -174,4 +176,5 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
         System.out.println(total);
         return new PageImpl<>(content, pageable, total);
     }
+
 }
