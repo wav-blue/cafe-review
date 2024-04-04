@@ -22,7 +22,7 @@ public class ReviewImgDto {
 
     private String imgUrl;
 
-    private String repImgYn;
+    private String isThumbnail;
 
 
     public static ReviewImgDto of(ReviewImg reviewImg){

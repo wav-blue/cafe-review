@@ -12,16 +12,20 @@ import javax.persistence.*;
 public class ReviewImg {
     @Id
     @Column(name="review_img_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String imgName;
 
+    @Column(nullable = false)
     private String oriImgName;
 
+    @Column(nullable = false)
     private String imgUrl;
 
-    private String repimgYn;
+    @Column(nullable = false)
+    private Boolean isThumbnail;
 
     // 다대일 단방향 매핑 (+ 지연로딩 설정)
     @ManyToOne(fetch = FetchType.LAZY)
