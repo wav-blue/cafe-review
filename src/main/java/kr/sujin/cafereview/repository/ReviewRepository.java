@@ -11,5 +11,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long>,
 QuerydslPredicateExecutor<Review>, ReviewRepositoryCustom{
     Optional<Review> getReviewById(Long id);
 
+    Optional<Review> findByIdAndDeletedDateIsNull(Long id);
+
     Review findByCafeNm(String cafeNm);
+
 }

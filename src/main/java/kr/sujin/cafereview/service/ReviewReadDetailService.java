@@ -31,8 +31,9 @@ public class ReviewReadDetailService {
         ReviewReadDetailDto reviewReadDetailDto;
     
         // Review 조회
-        Review review = reviewRepository.findById(reviewId).orElseThrow(EntityNotFoundException::new);
+        Review review = reviewRepository.findByIdAndDeletedDateIsNull(reviewId).orElseThrow(EntityNotFoundException::new);
         reviewReadDetailDto = ReviewReadDetailDto.of(review);
+
         // ReviewImg 조회
         List<ReviewImg> reviewImgList = reviewImgRepository.findByReviewIdOrderByIdAsc(reviewId);
         List<ReviewImgDto> reviewImgDtoList = new ArrayList<>();
