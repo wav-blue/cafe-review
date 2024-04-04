@@ -174,9 +174,11 @@ public class ReviewController {
     // 리뷰 삭제 처리
     @DeleteMapping(value = "/{reviewId}")
     public ResponseEntity deleteReview(@PathVariable("reviewId") Long reviewId, Model model) {
+        String email = getUserEmail();
+
         // deletedAt 컬럼 업데이트
         try{
-            reviewDeleteService.deleteReview(reviewId);
+            reviewDeleteService.deleteReview(reviewId, email);
         } catch (EntityNotFoundException e){
             System.out.println("e");
             System.out.println(e);

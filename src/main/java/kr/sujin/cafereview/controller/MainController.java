@@ -3,7 +3,6 @@ package kr.sujin.cafereview.controller;
 import groovy.util.logging.Slf4j;
 import kr.sujin.cafereview.dto.ReviewReadRandomDto;
 import kr.sujin.cafereview.service.ReviewReadService;
-import kr.sujin.cafereview.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
