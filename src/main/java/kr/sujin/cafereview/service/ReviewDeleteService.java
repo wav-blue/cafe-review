@@ -8,10 +8,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import javax.persistence.EntityNotFoundException;
-import javax.security.auth.message.AuthException;
 
 @Service
 @Transactional
@@ -29,6 +26,21 @@ public class ReviewDeleteService {
         
 
         // softDelete
-        reviewRepository.deleteByReviewId(reviewId);
+        reviewRepository.softDeleteByReviewId(reviewId, false);
+    }
+
+    public void deleteReviewByAdmin(Long reviewId, String email){
+        // 이미 삭제된 않는 리뷰 -> EntityNotFoundException
+        reviewRepository.findByIdAndDeletedDateIsNull(reviewId).orElseThrow(EntityNotFoundException::new);
+
+        // softDelete
+        reviewRepository.softDeleteByReviewId(reviewId, true);
+    }
+
+    public void updateDeletedStatusReviewByAdmin(Long reviewId, String email){
+        // 데이터베이스 내에 존재하지 않는 리뷰 -> EntityNotFoundException
+        reviewRepository.getReviewById(reviewId).orElseThrow(EntityNotFoundException::new);
+
+        reviewRepository.updateDeletedStatusToCreatedAndDeletedDateToNull(reviewId);
     }
 }
