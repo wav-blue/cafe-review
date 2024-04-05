@@ -22,7 +22,6 @@ import kr.sujin.cafereview.dto.ReviewReadRandomDto;
 import kr.sujin.cafereview.dto.ReviewSearchDto;
 import kr.sujin.cafereview.entity.QReview;
 import kr.sujin.cafereview.entity.QReviewImg;
-import kr.sujin.cafereview.entity.Review;
 import kr.sujin.cafereview.dto.QReviewReadDto;
 import kr.sujin.cafereview.dto.QReviewReadRandomDto;
 import kr.sujin.cafereview.dto.ReviewReadAdminDto;
@@ -143,24 +142,40 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     }
 
     @Override
-    public void deleteByReviewId(Long reviewId){
+    public void softDeleteByReviewId(Long reviewId, Boolean byAdmin){
         QReview review = QReview.review;
 
-        long execute = queryFactory
+        DeletedStatus deletedStatus = byAdmin? DeletedStatus.DELETED_BY_ADMIN : DeletedStatus.DELETED;
+
+        queryFactory
         .update(review)
         .set(review.deletedDate, LocalDateTime.now())
-        .set(review.deletedStatus, DeletedStatus.DELETED)
+        .set(review.deletedStatus, deletedStatus)
         .where(review.id.eq(reviewId))
         .execute();
     }
-    
+
+    @Override
+    public void updateDeletedStatusToCreatedAndDeletedDateToNull(Long reviewId){
+        QReview review = QReview.review;
+
+        queryFactory
+        .update(review)
+        .setNull(review.deletedDate)
+        .set(review.deletedStatus, DeletedStatus.CREATED)
+        .where(review.id.eq(reviewId))
+        .execute();
+    }
+
     @Override
     public Page<ReviewReadAdminDto> getReviewForAdminWithPagingBySearch(ReviewSearchDto reviewSearchDto, Pageable pageable){
         QReview review = QReview.review;
 
-        List<ReviewReadAdminDto> content = queryFactory
-        .select(new QReviewReadAdminDto(
-            review.id,
+        
+        QueryResults<ReviewReadAdminDto> results = queryFactory
+        .select(
+            new QReviewReadAdminDto(
+                review.id,
             review.email,
             review.cafeNm,
             review.menuNm,
@@ -170,9 +185,12 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
         .from(review)
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
-        .fetch();
+        .fetchResults();
 
-        long total = content.size();
+        List<ReviewReadAdminDto> content = results.getResults();
+
+        long total = results.getTotal();
+        System.out.println("total");
         System.out.println(total);
         return new PageImpl<>(content, pageable, total);
     }

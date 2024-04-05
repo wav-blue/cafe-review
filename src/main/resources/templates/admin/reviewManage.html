@@ -4,28 +4,72 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{layouts/layout1}"
 >
+  <head>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+  </head>
   <th:block layout:fragment="script">
     <script th:inline="javascript">
-      $(document).ready(function () {
-        $("#searchBtn").on("click", function (e) {
-          e.preventDefault();
-          page(0);
+      function refreshReviewByAdmin(reviewId) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        var url = `/review/${reviewId}/admin`;
+
+        $.ajax({
+          url: url,
+          type: "PUT",
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader(header, token);
+          },
+          cache: false,
+          success: function (result, status) {
+            alert("복구가 완료되었습니다(관리자)");
+            location.href = "";
+          },
+          error: function (jqXHR, status, error) {
+            console.log(jqXHR);
+            if (jqXHR.status == "401") {
+              alert("관리자 로그인이 필요합니다");
+              location.href = "/members/login";
+            } else if (jqXHR.status == "409" || jqXHR.status == "404") {
+              alert("유효하지 않은 접근입니다.");
+            } else {
+              alert(jqXHR.responseText);
+            }
+          },
         });
-      });
+      }
 
-      function page(page) {
-        var searchBy = $("#searchBy").val();
-        var searchQuery = $("#searchQuery").val();
+      function deleteReviewByAdmin(reviewId) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
 
-        location.href =
-          "search/" +
-          page +
-          "?searchDrinkType=" +
-          searchDrinkType +
-          "&searchBy=" +
-          searchBy +
-          "&searchQuery=" +
-          searchQuery;
+        var url = `/review/${reviewId}/admin`;
+
+        $.ajax({
+          url: url,
+          type: "DELETE",
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader(header, token);
+          },
+          cache: false,
+          success: function (result, status) {
+            alert("삭제가 완료되었습니다(관리자)");
+            location.href = "";
+          },
+          error: function (jqXHR, status, error) {
+            console.log(jqXHR);
+            if (jqXHR.status == "401") {
+              alert("관리자 로그인이 필요합니다");
+              location.href = "/members/login";
+            } else if (jqXHR.status == "409" || jqXHR.status == "404") {
+              alert("유효하지 않은 접근입니다.");
+            } else {
+              alert(jqXHR.responseText);
+            }
+          },
+        });
       }
     </script>
   </th:block>
@@ -40,8 +84,7 @@
 
   <div layout:fragment="content">
     <form
-      th:action="@{'/search/' +
-    ${reviews.number}}"
+      th:action="@{'/search/' + ${reviews.number}}"
       role="form"
       method="get"
       th:object="${reviews}"
@@ -112,11 +155,22 @@
             </td>
             <td>
               <button
-                class="btn btn-warning btn-sm"
+                class="btn btn-danger btn-sm"
+                type="button"
                 style="margin-left: 3px"
-                th:onclick="deleteReviewWarning()"
+                th:reviewId="${review.id}"
+                th:onclick="deleteReviewByAdmin(this.getAttribute('reviewId'))"
               >
                 삭제
+              </button>
+              <button
+                class="btn btn-warning btn-sm"
+                type="button"
+                style="margin-left: 3px"
+                th:reviewId="${review.id}"
+                th:onclick="refreshReviewByAdmin(this.getAttribute('reviewId'))"
+              >
+                복구
               </button>
             </td>
             <td>
@@ -126,15 +180,6 @@
         </tbody>
       </table>
 
-      <p th:text="reviews.number"></p>
-      <p th:text="${reviews.number}"></p>
-      <p th:text="maxPage"></p>
-      <p th:text="${maxPage}"></p>
-      <p th:text="reviews.totalPages"></p>
-      <p th:text="${reviews.totalPages}"></p>
-      <p th:text="reviews.number"></p>
-      <p th:text="${reviews.number}"></p>
-      <p th:text="${(reviews.number/maxPage)*maxPage + 1}"></p>
       <div
         th:with="start=${(reviews.number/maxPage)*maxPage + 1}, end=(${(reviews.totalPages == 0) ? 1 : (start + (maxPage - 1) < reviews.totalPages ? start + (maxPage - 1) : reviews.totalPages)})"
       >
@@ -144,7 +189,7 @@
             th:classappend="${reviews.number eq 0}?'disabled':''"
           >
             <a
-              th:href="@{'/review/search' + '?page=' + ${reviews.number}}"
+              th:href="@{'/review/admin' + '?page=' + ${reviews.number}}"
               aria-label="Previous"
               class="page-link"
             >
@@ -170,7 +215,7 @@
             th:classappend="${reviews.number+1 ge reviews.totalPages}?'disabled':''"
           >
             <a
-              th:href="@{'/review/search' + '?page=' + ${reviews.number+2}}"
+              th:href="@{'/review/admin' + '?page=' + ${reviews.number+2}}"
               aria-label="Next"
               class="page-link"
             >

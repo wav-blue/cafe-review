@@ -17,7 +17,9 @@ public interface ReviewRepositoryCustom {
 
     List<ReviewReadRandomDto> getReviewByRandom(Integer number);
     
-    void deleteByReviewId(Long reviewId);
+    void softDeleteByReviewId(Long reviewId, Boolean byAdmin);
+
+    void updateDeletedStatusToCreatedAndDeletedDateToNull(Long reviewId);
 
     Page<ReviewReadAdminDto> getReviewForAdminWithPagingBySearch(ReviewSearchDto reviewSearchDto, Pageable pageable);
 }

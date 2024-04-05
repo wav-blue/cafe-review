@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -191,11 +192,37 @@ public class ReviewController {
     @GetMapping(value = "/admin")
     public String getReviewWithPagingByAdmin(ReviewSearchDto reviewSearchDto, 
         @RequestParam(value = "page",required = false)Optional<Integer> page, Model model){
-            Pageable pageable = PageRequest.of(page.isPresent() ? page.get() - 1 : 0, 2);
+            Pageable pageable = PageRequest.of(page.isPresent() ? page.get() - 1 : 0, 10);
             Page<ReviewReadAdminDto> reviews =
                 reviewReadService.getReviewForAdminWithPagingBySearch(reviewSearchDto, pageable);
             model.addAttribute("reviews", reviews);
-            model.addAttribute("maxPage", 2);
+            model.addAttribute("maxPage", 5);
             return "admin/reviewManage";
+    }
+
+    // 리뷰 삭제 처리
+    @DeleteMapping(value = "/{reviewId}/admin")
+    public ResponseEntity deleteReviewByAdmin(@PathVariable("reviewId") Long reviewId, Model model) {
+        String email = getUserEmail();
+        try{
+            reviewDeleteService.deleteReviewByAdmin(reviewId, email);
+        } catch (EntityNotFoundException e){
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<String>("Complete", HttpStatus.NO_CONTENT);
+    }
+
+    // 리뷰 복구 처리
+    @PutMapping(value = "/{reviewId}/admin")
+    public ResponseEntity updateReviewByAdmin(@PathVariable("reviewId") Long reviewId, Model model) {
+        String email = getUserEmail();
+        try{
+            reviewDeleteService.updateDeletedStatusReviewByAdmin(reviewId, email);
+        } catch (EntityNotFoundException e){
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<String>("Complete", HttpStatus.NO_CONTENT);
     }
 }
