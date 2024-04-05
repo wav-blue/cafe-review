@@ -1,5 +1,6 @@
 package kr.sujin.cafereview.service;
 
+import kr.sujin.cafereview.dto.MemberFormDto;
 import kr.sujin.cafereview.entity.Member;
 import kr.sujin.cafereview.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,11 +19,16 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class MemberService implements UserDetailsService{
+public class MemberCreateService implements UserDetailsService{
 
     private final MemberRepository memberRepository;
 
-    public Member saveMember(Member member){
+    private final PasswordEncoder passwordEncoder;
+
+
+    public Member saveMember(MemberFormDto memberFormDto){
+        Member member = Member.createMember(memberFormDto, passwordEncoder);
+
         validateDuplicateMember(member);
         return memberRepository.save(member);
     }

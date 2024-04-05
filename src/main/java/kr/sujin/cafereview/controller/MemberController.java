@@ -2,17 +2,13 @@ package kr.sujin.cafereview.controller;
 
 import kr.sujin.cafereview.dto.MemberFormDto;
 import kr.sujin.cafereview.dto.MemberReadDto;
-import kr.sujin.cafereview.entity.Member;
+import kr.sujin.cafereview.service.MemberCreateService;
 import kr.sujin.cafereview.service.MemberReadService;
-import kr.sujin.cafereview.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,9 +22,8 @@ import javax.validation.Valid;
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
-    private final MemberService memberService;
+    private final MemberCreateService memberCreateService;
     private final MemberReadService memberReadService;
-    private final PasswordEncoder passwordEncoder;
 
     @GetMapping(value = "/new")
     public String memberForm(Model model){
@@ -43,8 +38,7 @@ public class MemberController {
         }
 
         try {
-            Member member = Member.createMember(memberFormDto, passwordEncoder);
-            memberService.saveMember(member);
+            memberCreateService.saveMember(memberFormDto);
         } catch (IllegalStateException e){ 
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";

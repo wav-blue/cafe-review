@@ -27,4 +27,6 @@ public class MemberFormDto {
     
     @Nullable
     private String address;
+
+    private Boolean isAdmin;
 }
