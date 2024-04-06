@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.sujin.cafereview.constant.CafeRegion;
+import kr.sujin.cafereview.dto.MemberReadDto;
 import kr.sujin.cafereview.dto.ReviewReadAdminDto;
 import kr.sujin.cafereview.dto.ReviewReadDto;
 import kr.sujin.cafereview.dto.ReviewReadRandomDto;
@@ -21,7 +23,10 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ReviewReadService {
+
     private final ReviewRepository reviewRepository;
+
+    private final MemberReadService memberReadService;
     
     public Review getReview(Long reviewId){
         Review review = reviewRepository.getReviewById(reviewId)
@@ -31,6 +36,15 @@ public class ReviewReadService {
 
     public Page<ReviewReadDto> getReviewWithPaging(Pageable pageable){
         return reviewRepository.getReviewWithPaging(pageable);
+    }
+
+    public Page<ReviewReadDto> getReviewByRegionWithPaging(Pageable pageable, String email){
+        
+        MemberReadDto memberReadDto = memberReadService.getMemberByEmail(email);
+
+        CafeRegion cafeRegion = memberReadDto.getRecommendRegion();
+
+        return reviewRepository.getReviewByRegionWithPaging(cafeRegion, pageable);
     }
 
     public Page<ReviewReadDto> getReviewWithPagingBySearch(ReviewSearchDto reviewSearchDto, Pageable pageable){

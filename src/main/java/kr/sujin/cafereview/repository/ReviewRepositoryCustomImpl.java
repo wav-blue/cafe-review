@@ -84,6 +84,37 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     }
 
     @Override
+    public Page<ReviewReadDto> getReviewByRegionWithPaging(CafeRegion cafeRegion, Pageable pageable){
+        QReview review = QReview.review;
+        QReviewImg reviewImg = QReviewImg.reviewImg;
+
+        QueryResults<ReviewReadDto> results = queryFactory
+            .select(
+            new QReviewReadDto(
+                review.id,
+                review.cafeNm,
+                review.menuNm,
+                review.rating,
+                review.reviewDetail,
+                review.cafeRegion,
+                reviewImg.imgUrl
+            )
+        ).from(reviewImg)
+        .join(reviewImg.review, review)
+        .where(reviewImg.isThumbnail.isTrue())
+        .where(review.deletedDate.isNull())
+        .where(searchCafeRegion(cafeRegion))
+        .orderBy(review.id.desc())
+        .offset(pageable.getOffset())
+        .limit(pageable.getPageSize())
+        .fetchResults();
+
+        List<ReviewReadDto> content = results.getResults();
+        long total = results.getTotal();
+        return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
     public Page<ReviewReadDto> getReviewWithPagingBySearch(ReviewSearchDto reviewSearchDto, Pageable pageable){
         QReview review = QReview.review;
         QReviewImg reviewImg = QReviewImg.reviewImg;

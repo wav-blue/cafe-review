@@ -13,6 +13,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.dto.MemberFormDto;
 import kr.sujin.cafereview.entity.Member;
 import kr.sujin.cafereview.repository.MemberRepository;
@@ -42,6 +43,7 @@ public class MemberCreateServiceTest {
         memberFormDto.setPassword(testPassword);
         memberFormDto.setAddress("테스트 주소");
         memberFormDto.setIsAdmin(false);
+        memberFormDto.setRecommendRegion(null);
 
         Optional<Member> alreadyMember =  memberRepository.findByEmail(testEmail);
         
@@ -79,6 +81,7 @@ public class MemberCreateServiceTest {
         memberFormDto.setPassword(testPassword);
         memberFormDto.setAddress("테스트 주소");
         memberFormDto.setIsAdmin(true);
+        memberFormDto.setRecommendRegion(CafeRegion.BUSAN);
 
         Optional<Member> alreadyMember =  memberRepository.findByEmail(testEmail);
         

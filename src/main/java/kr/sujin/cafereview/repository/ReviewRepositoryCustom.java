@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.dto.ReviewReadAdminDto;
 import kr.sujin.cafereview.dto.ReviewReadDto;
 import kr.sujin.cafereview.dto.ReviewReadRandomDto;
@@ -20,6 +21,8 @@ public interface ReviewRepositoryCustom {
     void softDeleteByReviewId(Long reviewId, Boolean byAdmin);
 
     void updateDeletedStatusToCreatedAndDeletedDateToNull(Long reviewId);
+
+    Page<ReviewReadDto> getReviewByRegionWithPaging(CafeRegion cafeRegion, Pageable pageable);
 
     Page<ReviewReadAdminDto> getReviewForAdminWithPagingBySearch(ReviewSearchDto reviewSearchDto, Pageable pageable);
 }

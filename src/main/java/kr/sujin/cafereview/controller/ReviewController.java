@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,6 +36,8 @@ import kr.sujin.cafereview.service.ReviewUpdateService;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +55,9 @@ public class ReviewController {
     // 현재 접속 중인 유저의 이메일
     private String getUserEmail(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return null;
+        }
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String userEmail = userDetails.getUsername();
 
@@ -107,9 +113,18 @@ public class ReviewController {
     }
 
     @GetMapping(value = "")
-    public String getReviewWithPaging(Optional<Integer> page, Model model){
+    public String getReviewWithPaging(Optional<Integer> page, Model model, Principal principal){
+
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() - 1 : 0, 3);
-        Page<ReviewReadDto> reviews = reviewReadService.getReviewWithPaging(pageable);
+
+        Page<ReviewReadDto> reviews;
+        
+        if(principal == null){
+            reviews = reviewReadService.getReviewWithPaging(pageable);
+        } else{
+            reviews = reviewReadService.getReviewByRegionWithPaging(pageable, principal.getName());
+        }
+        
         model.addAttribute("reviews", reviews);
         model.addAttribute("maxPage", 3);
         return "explore/review";
