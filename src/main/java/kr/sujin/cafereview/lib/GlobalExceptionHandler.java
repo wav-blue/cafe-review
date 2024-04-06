@@ -21,11 +21,6 @@ public class GlobalExceptionHandler {
         return "error/NotFound";
     }
 
-    @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<String> handle(IllegalStateException exception) {
-        return ResponseEntity.badRequest().body("이미 처리된 요청입니다!");
-    }
-
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<String> handle(AccessDeniedException exception) {
         return ResponseEntity.badRequest().body("권한이 없습니다!");

@@ -16,8 +16,6 @@ public class ReviewReadDto {
 
     private Integer rating;
 
-    private String reviewDetail;
-
     private CafeRegion cafeRegion;
 
     private String imgUrl;
@@ -28,7 +26,6 @@ public class ReviewReadDto {
         this.cafeNm = cafeNm;
         this.menuNm = menuNm;
         this.rating = rating;
-        this.reviewDetail = reviewDetail;
         this.cafeRegion = cafeRegion;
         this.imgUrl = imgUrl;
     }
