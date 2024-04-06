@@ -1,5 +1,6 @@
 package kr.sujin.cafereview.entity;
 
+import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.constant.Role;
 import kr.sujin.cafereview.dto.MemberFormDto;
 import lombok.Getter;
@@ -39,19 +40,22 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(nullable = true)
+    private CafeRegion recommendRegion;
+
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
         member.setName(memberFormDto.getName());
         member.setEmail(memberFormDto.getEmail());
         member.setAddress(memberFormDto.getAddress());
         String password = passwordEncoder.encode(memberFormDto.getPassword());
+        member.setRecommendRegion(CafeRegion.BUSAN);
         if(memberFormDto.getIsAdmin()){
             member.setRole(Role.ADMIN);
         } else{
             member.setRole(Role.USER);
         }
         member.setPassword(password);
-        
         return member;
     }
 }

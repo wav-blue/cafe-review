@@ -1,5 +1,6 @@
 package kr.sujin.cafereview.controller;
 
+import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.dto.MemberFormDto;
 import kr.sujin.cafereview.dto.MemberReadDto;
 import kr.sujin.cafereview.service.MemberCreateService;
@@ -25,21 +26,28 @@ public class MemberController {
     private final MemberCreateService memberCreateService;
     private final MemberReadService memberReadService;
 
+
     @GetMapping(value = "/new")
     public String memberForm(Model model){
         model.addAttribute("memberFormDto", new MemberFormDto());
+        model.addAttribute("cafeRegion", CafeRegion.values());
         return "member/memberForm";
     }
 
     @PostMapping(value = "/new")
     public String newMember(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model){
+        
+    System.out.println(memberFormDto.getRecommendRegion());
+
         if(bindingResult.hasErrors()){ //유효성검사 결과 X
+            model.addAttribute("cafeRegion", CafeRegion.values());
             return "member/memberForm";
         }
 
         try {
             memberCreateService.saveMember(memberFormDto);
         } catch (IllegalStateException e){ 
+            model.addAttribute("cafeRegion", CafeRegion.values());
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
         }

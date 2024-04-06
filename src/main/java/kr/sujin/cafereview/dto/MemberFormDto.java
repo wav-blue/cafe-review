@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import groovyjarjarantlr4.v4.runtime.misc.Nullable;
+import kr.sujin.cafereview.constant.CafeRegion;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -29,4 +30,7 @@ public class MemberFormDto {
     private String address;
 
     private Boolean isAdmin;
+
+    @Nullable
+    private CafeRegion recommendRegion;
 }

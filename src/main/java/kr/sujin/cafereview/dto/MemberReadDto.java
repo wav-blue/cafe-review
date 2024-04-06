@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
 
+import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.constant.Role;
 import kr.sujin.cafereview.entity.Member;
 
@@ -18,6 +19,8 @@ public class MemberReadDto {
     private String address;
 
     private Role role;
+
+    private CafeRegion recommendRegion;
 
     private static ModelMapper modelMapper = new ModelMapper();
 
