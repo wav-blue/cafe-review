@@ -3,8 +3,11 @@ package kr.sujin.cafereview.controller;
 import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.dto.MemberFormDto;
 import kr.sujin.cafereview.dto.MemberReadDto;
+import kr.sujin.cafereview.dto.MemberUpdatePasswordDto;
+import kr.sujin.cafereview.dto.ReviewFormDto;
 import kr.sujin.cafereview.service.MemberCreateService;
 import kr.sujin.cafereview.service.MemberReadService;
+import kr.sujin.cafereview.service.MemberUpdateService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.core.Authentication;
@@ -16,8 +19,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.security.Principal;
+import java.util.List;
 
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RequestMapping("/members")
 @Controller
@@ -25,6 +35,7 @@ import javax.validation.Valid;
 public class MemberController {
     private final MemberCreateService memberCreateService;
     private final MemberReadService memberReadService;
+    private final MemberUpdateService memberUpdateService;
 
 
     @GetMapping(value = "/new")
@@ -76,5 +87,47 @@ public class MemberController {
 
         return "/member/myPage";
     }
+
+    @GetMapping(value = "/password")
+    public String getUdateMemberPasswordForm(Model model) {
+        model.addAttribute("memberUpdatePasswordDto", new MemberUpdatePasswordDto());
+        return "member/passwordForm";
+    }
     
+
+    @PostMapping(value = "/password")
+    public String postUdateMemberPasswordForm(
+        @Valid MemberUpdatePasswordDto memberUpdatePasswordDto, BindingResult bindingResult, Model model, Principal principal) {
+            if(bindingResult.hasErrors()){
+                return "member/passwordForm";
+            } 
+                    
+            try{
+                String email = principal.getName();
+                memberUpdateService.updateMemberPassword(memberUpdatePasswordDto, email);
+            }catch(Exception e){
+                model.addAttribute("errorMessage", "비밀번호 수정 중 에러가 발생했습니다.");
+                return "member/passwordForm";
+            }
+            return "redirect:/";
+    }
+    
+    // @PostMapping(value = "/{reviewId}/edit")
+    // public String updateReview(@Valid ReviewFormDto reviewFormDto, BindingResult bindingResult, @RequestParam("reviewImgFile") List<MultipartFile> reviewImgFileList, Model model) {
+    //     if(bindingResult.hasErrors()){
+    //         return "cafe/reviewForm";
+    //     } 
+    //     if(reviewImgFileList.get(0).isEmpty() && reviewFormDto.getId() == null){
+    //         model.addAttribute("errorMessage", "관련 이미지를 하나 이상 등록해주세요");
+    //         return "cafe/reviewForm";
+    //     }  
+    //     try{
+    //         reviewUpdateService.updateReview((reviewFormDto), reviewImgFileList);
+    //     }catch(Exception e){
+    //         model.addAttribute("errorMessage", "리뷰 수정 중 에러가 발생했습니다.");
+    //         return "cafe/reviewForm";
+    //     }
+    //     return "redirect:/";
+    // }
+
 }

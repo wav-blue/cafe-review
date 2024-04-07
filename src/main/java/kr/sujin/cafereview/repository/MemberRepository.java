@@ -6,8 +6,10 @@ import kr.sujin.cafereview.entity.Member;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-public interface MemberRepository extends JpaRepository<Member, String> {
+public interface MemberRepository  extends JpaRepository<Member, String>,
+QuerydslPredicateExecutor<Member>, MemberRepositoryCustom {
     Optional<Member> findByEmail(String email);
 
     MemberReadWriterDto findWriterByEmail(String email);
