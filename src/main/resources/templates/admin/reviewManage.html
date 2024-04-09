@@ -98,23 +98,11 @@
           <option value="menuNm">메뉴 이름</option>
         </select>
         <select th:field="*{region}" class="form-control" style="width: auto">
-          <option value="">전체</option>
-          <option value="SEOUL">서울</option>
-          <option value="GYEONGGI">경기</option>
-          <option value="DAEGU">대구</option>
-          <option value="INCHEON">인천</option>
-          <option value="DAEJEON">대전</option>
-          <option value="GWANGJU">경주</option>
-          <option value="ULSAN">울산</option>
-          <option value="SEJONG">세종</option>
-          <option value="CHUNGCHEONG">충청</option>
-          <option value="JEONLA">전라</option>
-          <option value="GYEONGSANG">경상</option>
-          <option value="GANGWON">강원</option>
-          <option value="JEONBUG">전북</option>
-          <option value="BUSAN">부산</option>
-          <option value="JEJU">제주</option>
-          <option value="ETC">기타</option>
+          <option
+            th:each="region: ${cafeRegion}"
+            th:text="${region.label()}"
+            th:value="${region}"
+          ></option>
         </select>
         <input
           th:field="*{searchKeyword}"
@@ -131,13 +119,15 @@
           Search
         </button>
       </div>
-      <table class="table">
+      <table class="table" style="margin-top: 30px">
         <thead>
           <tr>
             <td>리뷰아이디</td>
             <td>카페명</td>
             <td>메뉴이름</td>
             <td>작성자 이메일</td>
+            <td>생성일자</td>
+            <td>수정일자</td>
             <td>리뷰 글 관리</td>
           </tr>
         </thead>
@@ -152,6 +142,16 @@
             </td>
             <td>
               <p th:text="${review.email}"></p>
+            </td>
+            <td>
+              <p
+                th:text="${#temporals.format(review.createdDate, 'yyyy.MM.dd HH:MM')}"
+              ></p>
+            </td>
+            <td>
+              <p
+                th:text="${#temporals.format(review.lastModifiedDate, 'yyyy.MM.dd HH:MM')}"
+              ></p>
             </td>
             <td>
               <button
