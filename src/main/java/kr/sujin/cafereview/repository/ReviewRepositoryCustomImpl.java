@@ -210,7 +210,10 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             review.email,
             review.cafeNm,
             review.menuNm,
-            review.deletedStatus
+            review.deletedStatus,
+            review.createdDate,
+            review.lastModifiedDate,
+            review.deletedDate
         )
         )
         .from(review)

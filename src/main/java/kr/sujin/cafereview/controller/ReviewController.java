@@ -6,7 +6,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.dto.ReviewFormDto;
 import kr.sujin.cafereview.dto.ReviewReadAdminDto;
 import kr.sujin.cafereview.dto.ReviewReadDetailDto;
@@ -52,18 +51,6 @@ public class ReviewController {
     private final ReviewUpdateService reviewUpdateService;
     private final ReviewReadDetailService reviewReadDetailService;
 
-    // 현재 접속 중인 유저의 이메일
-    private String getUserEmail(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return null;
-        }
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String userEmail = userDetails.getUsername();
-
-        return userEmail;
-    }
-
     // 본인이 작성한 리뷰인지 확인
     private Boolean checkWriter(String writerEmail){
         Boolean isWriter = false;
@@ -90,7 +77,7 @@ public class ReviewController {
     @PostMapping(value = "/new")
     public String createReview(@Valid ReviewFormDto reviewFormDto, BindingResult
                            bindingResult, Model model, @RequestParam("reviewImgFile")List<MultipartFile>
-                           reviewImgFileList){
+                           reviewImgFileList, Principal principal){
         if(bindingResult.hasErrors()){
             return "cafe/reviewForm";
         }
@@ -100,7 +87,7 @@ public class ReviewController {
             return "cafe/reviewForm";
         }
         
-        String email = getUserEmail();
+        String email = principal.getName();
 
         try{
             reviewCreateService.createReview(reviewFormDto, reviewImgFileList, email);
@@ -138,6 +125,7 @@ public class ReviewController {
             reviewReadService.getReviewWithPagingBySearch(reviewSearchDto, pageable);
         model.addAttribute("reviews", reviews);
         model.addAttribute("maxPage", 3);
+        model.addAttribute("cafeRegion", CafeRegion.values());
         return "explore/reviewSearch";
     }
 
@@ -189,15 +177,13 @@ public class ReviewController {
 
     // 리뷰 삭제 처리
     @DeleteMapping(value = "/{reviewId}")
-    public ResponseEntity deleteReview(@PathVariable("reviewId") Long reviewId, Model model) {
-        String email = getUserEmail();
+    public ResponseEntity deleteReview(@PathVariable("reviewId") Long reviewId, Model model, Principal principal) {
+        String email = principal.getName();
 
         // deletedAt 컬럼 업데이트
         try{
             reviewDeleteService.deleteReview(reviewId, email);
         } catch (EntityNotFoundException e){
-            System.out.println("e");
-            System.out.println(e);
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
@@ -212,13 +198,15 @@ public class ReviewController {
                 reviewReadService.getReviewForAdminWithPagingBySearch(reviewSearchDto, pageable);
             model.addAttribute("reviews", reviews);
             model.addAttribute("maxPage", 5);
+            model.addAttribute("cafeRegion", CafeRegion.values());
+            
             return "admin/reviewManage";
     }
 
     // 리뷰 삭제 처리
     @DeleteMapping(value = "/{reviewId}/admin")
-    public ResponseEntity deleteReviewByAdmin(@PathVariable("reviewId") Long reviewId, Model model) {
-        String email = getUserEmail();
+    public ResponseEntity deleteReviewByAdmin(@PathVariable("reviewId") Long reviewId, Model model, Principal principal) {
+        String email = principal.getName();
         try{
             reviewDeleteService.deleteReviewByAdmin(reviewId, email);
         } catch (EntityNotFoundException e){
@@ -230,8 +218,8 @@ public class ReviewController {
 
     // 리뷰 복구 처리
     @PutMapping(value = "/{reviewId}/admin")
-    public ResponseEntity updateReviewByAdmin(@PathVariable("reviewId") Long reviewId, Model model) {
-        String email = getUserEmail();
+    public ResponseEntity updateReviewByAdmin(@PathVariable("reviewId") Long reviewId, Model model, Principal principal) {
+        String email = principal.getName();
         try{
             reviewDeleteService.updateDeletedStatusReviewByAdmin(reviewId, email);
         } catch (EntityNotFoundException e){

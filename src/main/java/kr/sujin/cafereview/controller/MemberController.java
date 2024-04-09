@@ -4,7 +4,6 @@ import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.dto.MemberFormDto;
 import kr.sujin.cafereview.dto.MemberReadDto;
 import kr.sujin.cafereview.dto.MemberUpdatePasswordDto;
-import kr.sujin.cafereview.dto.ReviewFormDto;
 import kr.sujin.cafereview.service.MemberCreateService;
 import kr.sujin.cafereview.service.MemberReadService;
 import kr.sujin.cafereview.service.MemberUpdateService;
@@ -19,15 +18,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
-import java.util.List;
-
 import javax.validation.Valid;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RequestMapping("/members")
 @Controller
@@ -48,8 +41,6 @@ public class MemberController {
     @PostMapping(value = "/new")
     public String newMember(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model){
         
-    System.out.println(memberFormDto.getRecommendRegion());
-
         if(bindingResult.hasErrors()){ //유효성검사 결과 X
             model.addAttribute("cafeRegion", CafeRegion.values());
             return "member/memberForm";
@@ -111,23 +102,4 @@ public class MemberController {
             }
             return "redirect:/";
     }
-    
-    // @PostMapping(value = "/{reviewId}/edit")
-    // public String updateReview(@Valid ReviewFormDto reviewFormDto, BindingResult bindingResult, @RequestParam("reviewImgFile") List<MultipartFile> reviewImgFileList, Model model) {
-    //     if(bindingResult.hasErrors()){
-    //         return "cafe/reviewForm";
-    //     } 
-    //     if(reviewImgFileList.get(0).isEmpty() && reviewFormDto.getId() == null){
-    //         model.addAttribute("errorMessage", "관련 이미지를 하나 이상 등록해주세요");
-    //         return "cafe/reviewForm";
-    //     }  
-    //     try{
-    //         reviewUpdateService.updateReview((reviewFormDto), reviewImgFileList);
-    //     }catch(Exception e){
-    //         model.addAttribute("errorMessage", "리뷰 수정 중 에러가 발생했습니다.");
-    //         return "cafe/reviewForm";
-    //     }
-    //     return "redirect:/";
-    // }
-
 }

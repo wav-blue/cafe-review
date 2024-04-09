@@ -1,6 +1,7 @@
 package kr.sujin.cafereview.dto;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +31,13 @@ public class ReviewReadDetailDto {
 
     private String writerName;
 
-    //이미지 정보
+    // 이미지 정보
     private List<ReviewImgDto> reviewImgDtoList = new ArrayList<>();
+
+    // 날짜 정보
+    private LocalDateTime createdDate;
+
+    private LocalDateTime lastModifiedDate;
 
     private static ModelMapper modelMapper = new ModelMapper();
 

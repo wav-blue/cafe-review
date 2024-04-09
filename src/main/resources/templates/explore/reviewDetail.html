@@ -140,6 +140,8 @@
           <hr class="my-4" />
           <div class="h5" th:text="${review.cafeNm}"></div>
           <div class="h4" th:text="${review.menuNm}"></div>
+          <div class="p" th:text="${'지역: '+review.cafeRegion.label()}"></div>
+
           <hr class="my-4" />
           <button type="button" class="btn btn-success" onclick="addBookmark()">
             <svg
@@ -184,6 +186,15 @@
         <h4 class="display-5">상세 리뷰</h4>
         <hr class="my-4" />
         <p class="lead" th:text="${review.reviewDetail}"></p>
+        <hr class="my-4" />
+        <div
+          class="p"
+          th:text="${'등록일자: '+#temporals.format(review.lastModifiedDate, 'yyyy년 MM월 dd일 HH:MM')}"
+        ></div>
+        <div
+          class="p"
+          th:text="${'수정일자: '+#temporals.format(review.lastModifiedDate, 'yyyy년 MM월 dd일 HH:MM')}"
+        ></div>
       </div>
     </div>
 
