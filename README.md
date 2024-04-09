@@ -23,7 +23,13 @@
 <h4>빌드 도구</h4>
 <img src="https://img.shields.io/badge/maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white">
 
-## 주요 기능
+## 기능 소개
+
+<img src = "./readme_image/main.png" alt="메인">
+
+#### 메인 페이지
+
+- 리뷰 랜덤 조회
 
 #### 회원 기능
 
@@ -35,25 +41,29 @@
 #### 리뷰
 
 - 카페 리뷰 업로드 (이미지 추가)
-- 카페 리뷰 수정
-- 리뷰 삭제 (Soft delete)
+- 검색 조회
+- 생성, 수정, 삭제
+
+<img src = "./readme_image/explore.png" alt="조회">
 
 #### 리뷰 조회
 
-- 검색, 랜덤 조회
-- 삭제되지 않은 리뷰만 조회
-- Query method, Querydsl
+- 상세 조회
+- 리뷰 수정, 삭제 (Soft delete)
+- 조회 시 글 작성자와 현재 유저가 일치하는지 확인하고 dto의 isWriter 값을 Model에 추가 -> 글 작성자에게만 수정/삭제 버튼이 노출되도록 템플릿 작성
+
+<img src = "./readme_image/detail.png" alt="상세 페이지">
 
 #### 북마크
 
 - 북마크 추가
-- 유저가 북마크한 목록 조회 (Querydsl)
+- 유저가 북마크한 목록 조회
 - 북마크 삭제
 
-#### 예외 처리
+<img src = "./readme_image/bookmark.png" alt="북마크">
 
-- ControllerAdvice 어노테이션을 이용하여 전역 예외 처리
+#### Admin 기능
 
-<br/>
+- 유저의 리뷰 삭제 가능, 잘못 삭제된 게시글 복구 가능
 
 > '웹 프로그래밍' 강의에서 과제로 작성하였던 코드를 전체적으로 리팩토링하여 새로 커밋했습니다.
