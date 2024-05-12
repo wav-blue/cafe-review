@@ -19,11 +19,12 @@ public class ReviewDeleteService {
     public void deleteReview(Long reviewId, String email){
         // 이미 존재하지 않는 리뷰 -> EntityNotFoundException
         Review review = reviewRepository.getReviewById(reviewId).orElseThrow(EntityNotFoundException::new);
-        if (review.getEmail() != email){
+        
+        System.out.println(email.equals(review.getEmail()));
+        if (!email.equals(review.getEmail())){
             // 권한 없음
             throw new AccessDeniedException("삭제 권한 없음");
         }
-        
 
         // softDelete
         reviewRepository.softDeleteByReviewId(reviewId, false);

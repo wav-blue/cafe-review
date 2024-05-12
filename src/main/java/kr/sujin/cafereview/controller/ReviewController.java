@@ -71,6 +71,7 @@ public class ReviewController {
     @GetMapping(value = "/new")
     public String getCreateReviewForm(Model model){
         model.addAttribute("reviewFormDto", new ReviewFormDto());
+        model.addAttribute("cafeRegion", CafeRegion.values());
         return "cafe/reviewForm";
     }
 
@@ -136,11 +137,12 @@ public class ReviewController {
         try{
             ReviewFormDto reviewFormDto = reviewUpdateService.getReviewDetail(reviewId);
             model.addAttribute("reviewFormDto", reviewFormDto);
+            model.addAttribute("cafeRegion", CafeRegion.values());
         } catch (EntityNotFoundException e){
             model.addAttribute("errorMessage", "존재하지 않는 리뷰입니다.");
             model.addAttribute("reviewFormDto", new ReviewFormDto());
             return "cafe/reviewForm";
-        }
+        } 
         return "cafe/reviewForm";
     }
 
@@ -183,9 +185,9 @@ public class ReviewController {
         // deletedAt 컬럼 업데이트
         try{
             reviewDeleteService.deleteReview(reviewId, email);
-        } catch (EntityNotFoundException e){
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        } catch (Exception e){
+            return new ResponseEntity<String>("삭제 중 에러가 발생했습니다.", HttpStatus.BAD_REQUEST);
+        } 
 
         return new ResponseEntity<String>("Complete", HttpStatus.NO_CONTENT);
     }
