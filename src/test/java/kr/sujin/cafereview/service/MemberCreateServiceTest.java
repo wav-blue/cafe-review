@@ -14,9 +14,10 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.sujin.cafereview.constant.CafeRegion;
-import kr.sujin.cafereview.dto.MemberFormDto;
+import kr.sujin.cafereview.member.repository.dto.MemberFormDto;
+import kr.sujin.cafereview.member.service.MemberCreateService;
 import kr.sujin.cafereview.entity.Member;
-import kr.sujin.cafereview.repository.MemberRepository;
+import kr.sujin.cafereview.member.repository.MemberRepository;
 
 @SpringBootTest
 @Transactional

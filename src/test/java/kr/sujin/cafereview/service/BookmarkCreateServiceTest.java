@@ -13,9 +13,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.sujin.cafereview.dto.BookmarkCreateDto;
+import kr.sujin.cafereview.bookmark.repository.dto.BookmarkCreateDto;
 import kr.sujin.cafereview.entity.Bookmark;
-import kr.sujin.cafereview.repository.BookmarkRepository;
+import kr.sujin.cafereview.bookmark.repository.BookmarkRepository;
+import kr.sujin.cafereview.bookmark.service.BookmarkCreateService;
 
 @SpringBootTest
 @Transactional
@@ -60,7 +61,7 @@ public class BookmarkCreateServiceTest {
         bookmarkCreateDto.setFirstImgUrl("/img/uploads/test_img.jpg");
 
         assertThrows(IllegalStateException.class, () -> {
-            Long reviewId = bookmarkCreateService.addBookmark(bookmarkCreateDto, userEmail);
+            bookmarkCreateService.addBookmark(bookmarkCreateDto, userEmail);
         });
     }
 

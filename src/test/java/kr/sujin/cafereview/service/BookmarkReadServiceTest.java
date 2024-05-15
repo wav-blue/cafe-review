@@ -19,10 +19,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.sujin.cafereview.dto.BookmarkCreateDto;
-import kr.sujin.cafereview.dto.BookmarkReadDto;
-import kr.sujin.cafereview.entity.Bookmark;
-import kr.sujin.cafereview.repository.BookmarkRepository;
+import kr.sujin.cafereview.bookmark.repository.dto.BookmarkReadDto;
+import kr.sujin.cafereview.bookmark.service.BookmarkReadService;
+import kr.sujin.cafereview.bookmark.repository.BookmarkRepository;
 
 @SpringBootTest
 @Transactional
