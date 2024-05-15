@@ -1,12 +1,12 @@
-package kr.sujin.cafereview.controller;
+package kr.sujin.cafereview.member;
 
 import kr.sujin.cafereview.constant.CafeRegion;
-import kr.sujin.cafereview.dto.MemberFormDto;
-import kr.sujin.cafereview.dto.MemberReadDto;
-import kr.sujin.cafereview.dto.MemberUpdatePasswordDto;
-import kr.sujin.cafereview.service.MemberCreateService;
-import kr.sujin.cafereview.service.MemberReadService;
-import kr.sujin.cafereview.service.MemberUpdateService;
+import kr.sujin.cafereview.member.repository.dto.MemberFormDto;
+import kr.sujin.cafereview.member.repository.dto.MemberReadDto;
+import kr.sujin.cafereview.member.repository.dto.MemberUpdatePasswordDto;
+import kr.sujin.cafereview.member.service.MemberCreateService;
+import kr.sujin.cafereview.member.service.MemberReadService;
+import kr.sujin.cafereview.member.service.MemberUpdateService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.core.Authentication;

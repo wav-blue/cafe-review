@@ -1,7 +1,7 @@
-package kr.sujin.cafereview.repository;
+package kr.sujin.cafereview.member.repository;
 
-import kr.sujin.cafereview.dto.MemberReadWriterDto;
 import kr.sujin.cafereview.entity.Member;
+import kr.sujin.cafereview.member.repository.dto.MemberReadWriterDto;
 
 import java.util.Optional;
 

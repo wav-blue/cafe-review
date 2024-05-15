@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.controller;
+package kr.sujin.cafereview.bookmark;
 
 import java.security.Principal;
 import java.util.List;
@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kr.sujin.cafereview.dto.BookmarkCreateDto;
-import kr.sujin.cafereview.dto.BookmarkReadDto;
-import kr.sujin.cafereview.service.BookmarkCreateService;
-import kr.sujin.cafereview.service.BookmarkDeleteService;
-import kr.sujin.cafereview.service.BookmarkReadService;
+import kr.sujin.cafereview.bookmark.repository.dto.BookmarkCreateDto;
+import kr.sujin.cafereview.bookmark.repository.dto.BookmarkReadDto;
+import kr.sujin.cafereview.bookmark.service.BookmarkCreateService;
+import kr.sujin.cafereview.bookmark.service.BookmarkDeleteService;
+import kr.sujin.cafereview.bookmark.service.BookmarkReadService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;

@@ -1,13 +1,14 @@
-package kr.sujin.cafereview.service;
+package kr.sujin.cafereview.bookmark.service;
 
-import kr.sujin.cafereview.dto.BookmarkReadDto;
-import kr.sujin.cafereview.repository.BookmarkRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import kr.sujin.cafereview.bookmark.repository.BookmarkRepository;
+import kr.sujin.cafereview.bookmark.repository.dto.BookmarkReadDto;
 
 @Service
 @Transactional(readOnly = true)

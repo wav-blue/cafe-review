@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.repository;
+package kr.sujin.cafereview.bookmark.repository;
 
 import kr.sujin.cafereview.entity.Bookmark;
 

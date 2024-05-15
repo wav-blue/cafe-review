@@ -1,8 +1,8 @@
-package kr.sujin.cafereview.service;
+package kr.sujin.cafereview.member.service;
 
-import kr.sujin.cafereview.dto.MemberUpdatePasswordDto;
 import kr.sujin.cafereview.entity.Member;
-import kr.sujin.cafereview.repository.MemberRepository;
+import kr.sujin.cafereview.member.repository.MemberRepository;
+import kr.sujin.cafereview.member.repository.dto.MemberUpdatePasswordDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

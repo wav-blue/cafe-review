@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.repository;
+package kr.sujin.cafereview.bookmark.repository;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import org.springframework.data.domain.Pageable;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import kr.sujin.cafereview.dto.BookmarkReadDto;
-import kr.sujin.cafereview.dto.QBookmarkReadDto;
+import kr.sujin.cafereview.bookmark.repository.dto.BookmarkReadDto;
+import kr.sujin.cafereview.bookmark.repository.dto.QBookmarkReadDto;
 import kr.sujin.cafereview.entity.QBookmark;
 import kr.sujin.cafereview.entity.QReview;
 

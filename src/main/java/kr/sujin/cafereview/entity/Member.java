@@ -2,7 +2,7 @@ package kr.sujin.cafereview.entity;
 
 import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.constant.Role;
-import kr.sujin.cafereview.dto.MemberFormDto;
+import kr.sujin.cafereview.member.repository.dto.MemberFormDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

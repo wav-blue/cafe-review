@@ -1,8 +1,8 @@
-package kr.sujin.cafereview.controller;
+package kr.sujin.cafereview;
 
 import groovy.util.logging.Slf4j;
-import kr.sujin.cafereview.dto.ReviewReadRandomDto;
-import kr.sujin.cafereview.service.ReviewReadService;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadRandomDto;
+import kr.sujin.cafereview.review.service.ReviewReadService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

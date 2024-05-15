@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.dto;
+package kr.sujin.cafereview.member.repository.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
-public class UserRegisterDto {
+public class MemberRegisterDto {
 
     @NotBlank(message = "이름은 필수 입력 값입니다.")
     private String name;

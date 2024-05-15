@@ -1,11 +1,11 @@
-package kr.sujin.cafereview.repository;
+package kr.sujin.cafereview.member.repository;
 
 import javax.persistence.EntityManager;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import kr.sujin.cafereview.entity.QMember;
-import kr.sujin.cafereview.dto.MemberUpdatePasswordDto;
+import kr.sujin.cafereview.member.repository.dto.MemberUpdatePasswordDto;
 
 public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
     private JPAQueryFactory queryFactory;

@@ -1,6 +1,6 @@
-package kr.sujin.cafereview.repository;
+package kr.sujin.cafereview.member.repository;
 
-import kr.sujin.cafereview.dto.MemberUpdatePasswordDto;
+import kr.sujin.cafereview.member.repository.dto.MemberUpdatePasswordDto;
 
 public interface MemberRepositoryCustom {
 

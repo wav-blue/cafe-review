@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.dto;
+package kr.sujin.cafereview.bookmark.repository.dto;
 
 import org.modelmapper.ModelMapper;
 

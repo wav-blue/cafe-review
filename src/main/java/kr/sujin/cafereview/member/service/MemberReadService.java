@@ -1,9 +1,9 @@
-package kr.sujin.cafereview.service;
+package kr.sujin.cafereview.member.service;
 
-import kr.sujin.cafereview.dto.MemberReadDto;
-import kr.sujin.cafereview.dto.MemberReadWriterDto;
 import kr.sujin.cafereview.entity.Member;
-import kr.sujin.cafereview.repository.MemberRepository;
+import kr.sujin.cafereview.member.repository.MemberRepository;
+import kr.sujin.cafereview.member.repository.dto.MemberReadDto;
+import kr.sujin.cafereview.member.repository.dto.MemberReadWriterDto;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;

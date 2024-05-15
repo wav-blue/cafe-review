@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.service;
+package kr.sujin.cafereview.bookmark.service;
 
 import lombok.RequiredArgsConstructor;
 
@@ -7,8 +7,8 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.sujin.cafereview.bookmark.repository.BookmarkRepository;
 import kr.sujin.cafereview.entity.Bookmark;
-import kr.sujin.cafereview.repository.BookmarkRepository;
 
 @Service
 @Transactional

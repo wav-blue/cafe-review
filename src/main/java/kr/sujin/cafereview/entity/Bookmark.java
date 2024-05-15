@@ -1,6 +1,6 @@
 package kr.sujin.cafereview.entity;
 
-import kr.sujin.cafereview.dto.BookmarkCreateDto;
+import kr.sujin.cafereview.bookmark.repository.dto.BookmarkCreateDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
