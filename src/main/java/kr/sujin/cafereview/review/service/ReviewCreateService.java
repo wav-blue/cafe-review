@@ -1,9 +1,9 @@
-package kr.sujin.cafereview.service;
+package kr.sujin.cafereview.review.service;
 
-import kr.sujin.cafereview.dto.ReviewFormDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewFormDto;
 import kr.sujin.cafereview.entity.Review;
 import kr.sujin.cafereview.entity.ReviewImg;
-import kr.sujin.cafereview.repository.ReviewRepository;
+import kr.sujin.cafereview.review.repository.ReviewRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 

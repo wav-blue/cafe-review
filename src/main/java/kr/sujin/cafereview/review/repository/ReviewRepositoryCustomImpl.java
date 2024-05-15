@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.repository;
+package kr.sujin.cafereview.review.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,15 +17,15 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.constant.DeletedStatus;
-import kr.sujin.cafereview.dto.ReviewReadDto;
-import kr.sujin.cafereview.dto.ReviewReadRandomDto;
-import kr.sujin.cafereview.dto.ReviewSearchDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadRandomDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewSearchDto;
 import kr.sujin.cafereview.entity.QReview;
 import kr.sujin.cafereview.entity.QReviewImg;
-import kr.sujin.cafereview.dto.QReviewReadDto;
-import kr.sujin.cafereview.dto.QReviewReadRandomDto;
-import kr.sujin.cafereview.dto.ReviewReadAdminDto;
-import kr.sujin.cafereview.dto.QReviewReadAdminDto;
+import kr.sujin.cafereview.review.repository.dto.QReviewReadDto;
+import kr.sujin.cafereview.review.repository.dto.QReviewReadRandomDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadAdminDto;
+import kr.sujin.cafereview.review.repository.dto.QReviewReadAdminDto;
 
 import java.time.LocalDateTime;
 public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {

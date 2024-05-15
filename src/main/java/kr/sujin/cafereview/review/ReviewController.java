@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.controller;
+package kr.sujin.cafereview.review;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,16 +22,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.sujin.cafereview.constant.CafeRegion;
-import kr.sujin.cafereview.dto.ReviewFormDto;
-import kr.sujin.cafereview.dto.ReviewReadAdminDto;
-import kr.sujin.cafereview.dto.ReviewReadDetailDto;
-import kr.sujin.cafereview.dto.ReviewReadDto;
-import kr.sujin.cafereview.dto.ReviewSearchDto;
-import kr.sujin.cafereview.service.ReviewCreateService;
-import kr.sujin.cafereview.service.ReviewDeleteService;
-import kr.sujin.cafereview.service.ReviewReadDetailService;
-import kr.sujin.cafereview.service.ReviewReadService;
-import kr.sujin.cafereview.service.ReviewUpdateService;
+import kr.sujin.cafereview.review.repository.dto.ReviewFormDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadAdminDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadDetailDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewSearchDto;
+import kr.sujin.cafereview.review.service.ReviewCreateService;
+import kr.sujin.cafereview.review.service.ReviewDeleteService;
+import kr.sujin.cafereview.review.service.ReviewReadDetailService;
+import kr.sujin.cafereview.review.service.ReviewReadService;
+import kr.sujin.cafereview.review.service.ReviewUpdateService;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;

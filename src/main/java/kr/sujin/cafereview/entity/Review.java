@@ -7,7 +7,7 @@ import org.hibernate.annotations.SQLDelete;
 
 import kr.sujin.cafereview.constant.CafeRegion;
 import kr.sujin.cafereview.constant.DeletedStatus;
-import kr.sujin.cafereview.dto.ReviewFormDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewFormDto;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;

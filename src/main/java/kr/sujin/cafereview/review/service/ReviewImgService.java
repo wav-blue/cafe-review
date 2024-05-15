@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.service;
+package kr.sujin.cafereview.review.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,7 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
 import kr.sujin.cafereview.entity.ReviewImg;
-import kr.sujin.cafereview.repository.ReviewImgRepository;
+import kr.sujin.cafereview.review.repository.ReviewImgRepository;
+import kr.sujin.cafereview.service.FileService;
 
 import javax.persistence.EntityNotFoundException;
 

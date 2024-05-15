@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.service;
+package kr.sujin.cafereview.review.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
-import kr.sujin.cafereview.dto.ReviewFormDto;
-import kr.sujin.cafereview.dto.ReviewImgDto;
 import kr.sujin.cafereview.entity.Review;
 import kr.sujin.cafereview.entity.ReviewImg;
-import kr.sujin.cafereview.repository.ReviewImgRepository;
-import kr.sujin.cafereview.repository.ReviewRepository;
+import kr.sujin.cafereview.review.repository.ReviewImgRepository;
+import kr.sujin.cafereview.review.repository.ReviewRepository;
+import kr.sujin.cafereview.review.repository.dto.ReviewFormDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewImgDto;
+import kr.sujin.cafereview.service.FileService;
 import lombok.RequiredArgsConstructor;
 
 @Service

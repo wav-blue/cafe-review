@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.repository;
+package kr.sujin.cafereview.review.repository;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import kr.sujin.cafereview.constant.CafeRegion;
-import kr.sujin.cafereview.dto.ReviewReadAdminDto;
-import kr.sujin.cafereview.dto.ReviewReadDto;
-import kr.sujin.cafereview.dto.ReviewReadRandomDto;
-import kr.sujin.cafereview.dto.ReviewSearchDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadAdminDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadRandomDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewSearchDto;
 
 public interface ReviewRepositoryCustom {
     Page<ReviewReadDto> getReviewWithPaging(Pageable pageable);

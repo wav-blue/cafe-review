@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.service;
+package kr.sujin.cafereview.review.service;
 
 import java.util.List;
 
@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.sujin.cafereview.constant.CafeRegion;
-import kr.sujin.cafereview.dto.MemberReadDto;
-import kr.sujin.cafereview.dto.ReviewReadAdminDto;
-import kr.sujin.cafereview.dto.ReviewReadDto;
-import kr.sujin.cafereview.dto.ReviewReadRandomDto;
-import kr.sujin.cafereview.dto.ReviewSearchDto;
 import kr.sujin.cafereview.entity.Review;
-import kr.sujin.cafereview.repository.ReviewRepository;
+import kr.sujin.cafereview.member.repository.dto.MemberReadDto;
+import kr.sujin.cafereview.member.service.MemberReadService;
+import kr.sujin.cafereview.review.repository.ReviewRepository;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadAdminDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadRandomDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewSearchDto;
 import lombok.RequiredArgsConstructor;
 
 @Transactional(readOnly = true)

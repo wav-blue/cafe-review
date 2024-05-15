@@ -1,7 +1,7 @@
-package kr.sujin.cafereview.service;
+package kr.sujin.cafereview.review.service;
 
 import kr.sujin.cafereview.entity.Review;
-import kr.sujin.cafereview.repository.ReviewRepository;
+import kr.sujin.cafereview.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.access.AccessDeniedException;

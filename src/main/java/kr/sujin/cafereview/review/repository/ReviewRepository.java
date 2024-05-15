@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.repository;
+package kr.sujin.cafereview.review.repository;
 
 import kr.sujin.cafereview.entity.Review;
 

@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.service;
+package kr.sujin.cafereview.review.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +8,14 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.sujin.cafereview.dto.MemberReadWriterDto;
-import kr.sujin.cafereview.dto.ReviewImgDto;
-import kr.sujin.cafereview.dto.ReviewReadDetailDto;
+import kr.sujin.cafereview.member.repository.dto.MemberReadWriterDto;
+import kr.sujin.cafereview.member.service.MemberReadService;
+import kr.sujin.cafereview.review.repository.ReviewImgRepository;
+import kr.sujin.cafereview.review.repository.ReviewRepository;
+import kr.sujin.cafereview.review.repository.dto.ReviewImgDto;
+import kr.sujin.cafereview.review.repository.dto.ReviewReadDetailDto;
 import kr.sujin.cafereview.entity.Review;
 import kr.sujin.cafereview.entity.ReviewImg;
-import kr.sujin.cafereview.repository.ReviewImgRepository;
-import kr.sujin.cafereview.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 
 @Transactional(readOnly = true)

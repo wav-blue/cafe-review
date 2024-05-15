@@ -1,4 +1,4 @@
-package kr.sujin.cafereview.dto;
+package kr.sujin.cafereview.review.repository.dto;
 
 import kr.sujin.cafereview.constant.CafeRegion;
 import lombok.Getter;
