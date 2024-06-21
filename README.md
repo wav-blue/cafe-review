@@ -80,6 +80,10 @@
 
 - JSP의 쿼리 메소드, querydsl 활용
 
+#### MVC 패턴 적용
+
+<img src = "./readme_image/mvcPattern.png" alt="MVC">
+
 #### 테스트 코드
 
 - Service의 단위 테스트로 비즈니스 로직의 동작을 확인
