@@ -1,11 +1,12 @@
 package kr.sujin.cafereview.entity;
 
-import kr.sujin.cafereview.bookmark.repository.dto.BookmarkCreateDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+
+import kr.sujin.cafereview.dto.bookmark.BookmarkCreateDto;
 
 @Entity
 @Table(name="bookmark_item")

@@ -19,9 +19,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.sujin.cafereview.bookmark.repository.dto.BookmarkReadDto;
-import kr.sujin.cafereview.bookmark.service.BookmarkReadService;
-import kr.sujin.cafereview.bookmark.repository.BookmarkRepository;
+import kr.sujin.cafereview.dto.bookmark.BookmarkReadDto;
+import kr.sujin.cafereview.repository.BookmarkRepository;
+import kr.sujin.cafereview.service.bookmark.BookmarkReadService;
+
 
 @SpringBootTest
 @Transactional
@@ -36,7 +37,7 @@ public class BookmarkReadServiceTest {
 
     @Test
     @DisplayName("북마크 조회 테스트")
-    @WithMockUser(username = "testEmail2@exam.com", roles = "ADMIN")
+    @WithMockUser(username = "testEmail2@exam.com", roles = "USER")
     void readBookmark() throws Exception{
         String email = "testEmail2@exam.com";
         //Pageable

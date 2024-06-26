@@ -17,14 +17,14 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.sujin.cafereview.constant.CafeRegion;
-import kr.sujin.cafereview.review.repository.dto.ReviewReadDto;
-import kr.sujin.cafereview.review.repository.dto.ReviewSearchDto;
-import kr.sujin.cafereview.review.service.ReviewReadDetailService;
-import kr.sujin.cafereview.review.service.ReviewReadService;
+import kr.sujin.cafereview.lib.constant.CafeRegion;
+import kr.sujin.cafereview.repository.MemberRepository;
+import kr.sujin.cafereview.repository.ReviewRepository;
+import kr.sujin.cafereview.service.review.ReviewReadDetailService;
+import kr.sujin.cafereview.service.review.ReviewReadService;
+import kr.sujin.cafereview.dto.review.ReviewReadDto;
+import kr.sujin.cafereview.dto.review.ReviewSearchDto;
 import kr.sujin.cafereview.entity.Member;
-import kr.sujin.cafereview.member.repository.MemberRepository;
-import kr.sujin.cafereview.review.repository.ReviewRepository;
 
 @SpringBootTest
 @Transactional

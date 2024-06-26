@@ -16,11 +16,11 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.sujin.cafereview.constant.CafeRegion;
-import kr.sujin.cafereview.review.repository.dto.ReviewFormDto;
-import kr.sujin.cafereview.review.service.ReviewCreateService;
+import kr.sujin.cafereview.lib.constant.CafeRegion;
+import kr.sujin.cafereview.repository.ReviewRepository;
+import kr.sujin.cafereview.service.review.ReviewCreateService;
+import kr.sujin.cafereview.dto.review.ReviewFormDto;
 import kr.sujin.cafereview.entity.Review;
-import kr.sujin.cafereview.review.repository.ReviewRepository;
 
 
 @SpringBootTest

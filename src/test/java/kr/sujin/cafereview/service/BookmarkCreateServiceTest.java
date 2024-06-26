@@ -13,10 +13,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.sujin.cafereview.bookmark.repository.dto.BookmarkCreateDto;
+import kr.sujin.cafereview.dto.bookmark.BookmarkCreateDto;
 import kr.sujin.cafereview.entity.Bookmark;
-import kr.sujin.cafereview.bookmark.repository.BookmarkRepository;
-import kr.sujin.cafereview.bookmark.service.BookmarkCreateService;
+import kr.sujin.cafereview.repository.BookmarkRepository;
+import kr.sujin.cafereview.service.bookmark.BookmarkCreateService;
 
 @SpringBootTest
 @Transactional
@@ -52,7 +52,7 @@ public class BookmarkCreateServiceTest {
     
     @Test
     @DisplayName("북마크 추가 테스트: 중복 저장 불가")
-    @WithMockUser(username = "testEmail2@exam.com", roles = "ADMIN")
+    @WithMockUser(username = "testEmail2@exam.com", roles = "USER")
     void saveBookmarkForException() throws Exception{
         String userEmail = "testEmail2@exam.com";
 
