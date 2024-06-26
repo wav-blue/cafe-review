@@ -73,15 +73,14 @@ public class ReviewController {
     public String getCreateReviewForm(Model model){
         model.addAttribute("reviewFormDto", new ReviewFormDto());
         model.addAttribute("cafeRegion", CafeRegion.values());
-        model.addAttribute("tagType", TagType.values());
+        model.addAttribute("tagTypes", TagType.values());
         return "cafe/reviewForm";
     }
 
     @PostMapping(value = "/new")
     public String createReview(@Valid ReviewFormDto reviewFormDto, BindingResult
                            bindingResult, Model model, @RequestParam("reviewImgFile")List<MultipartFile>
-                           reviewImgFileList, @RequestParam("reviewTag")List<TagType>
-                           reviewTagList, Principal principal){
+                           reviewImgFileList, Principal principal){
         if(bindingResult.hasErrors()){
             return "cafe/reviewForm";
         }

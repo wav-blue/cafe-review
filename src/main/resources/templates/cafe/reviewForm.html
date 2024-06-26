@@ -7,6 +7,9 @@
   <!-- 사용자 스크립트 추가 -->
   <th:block layout:fragment="script">
     <script th:inline="javascript">
+
+      var tagGroup = [];
+
       $(document).ready(function(){
           var errorMessage = [[${errorMessage}]];
           if(errorMessage != null){
@@ -138,6 +141,29 @@
           th:field="*{reviewDetail}"
         ></textarea>
       </div>
+
+      <div class="form-group" th:if="${#strings.isEmpty(reviewFormDto.id)}">
+        <h5>태그</h5>
+        <div
+          class="btn-group mr-2"
+          style="margin: 7px 0"
+          role="group"
+          th:each="tagType : ${tagTypes}"
+        >
+          <input
+            type="checkbox"
+            th:field="*{tagTypes}"
+            th:value="${tagType}"
+            class="form-check-input"
+          />
+          <label
+            th:for="${#ids.prev('tagTypes')}"
+            th:text="${tagType.label}"
+            class="form-check-label"
+          ></label>
+        </div>
+      </div>
+
       <h5>이미지 등록</h5>
       <p
         th:if="${#fields.hasErrors('reviewDetail')}"
@@ -204,6 +230,7 @@
           수정
         </button>
       </div>
+
       <input
         type="hidden"
         th:name="${_csrf.parameterName}"

@@ -1,6 +1,7 @@
 package kr.sujin.cafereview.dto.review;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
@@ -43,7 +44,8 @@ public class ReviewFormDto {
     @NotNull
     private CafeRegion cafeRegion;
 
-    private List<TagType> tagGroup;
+    @Nullable
+    private List<String> tagTypes = Collections.emptyList();
 
     //음료를 저장한 후 수정할 때 이미지 정보를 저장
     private List<ReviewImgDto> reviewImgDtoList = new ArrayList<>();

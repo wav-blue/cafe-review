@@ -20,6 +20,7 @@ import java.util.List;
 public class ReviewCreateService {
     private final ReviewRepository reviewRepository;
     private final ReviewImgService reviewImgService;
+    private final ReviewTagCreateService reviewTagCreateService;
 
     public Long createReview(ReviewFormDto reviewFormDto,
                              List<MultipartFile> reviewImgFileList, String email) throws Exception{
@@ -28,6 +29,9 @@ public class ReviewCreateService {
         // 리뷰 등록
         Review review = reviewFormDto.createReview();
         reviewRepository.save(review);
+
+        // 리뷰 태그 등록
+        reviewTagCreateService.createReviewTags(reviewFormDto.getTagTypes(), review.getId());
 
         //이미지 등록
         for(int i = 0; i < reviewImgFileList.size(); i++){
