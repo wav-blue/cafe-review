@@ -48,7 +48,6 @@ public class ReviewReadDetailService {
         var writerEmail = reviewReadDetailDto.getEmail();
 
         MemberReadWriterDto writer = memberReadService.getMemberWriterByEmail(writerEmail);
-        System.out.println(writer);
         reviewReadDetailDto.setWriterName(writer.getName());
 
         return reviewReadDetailDto;

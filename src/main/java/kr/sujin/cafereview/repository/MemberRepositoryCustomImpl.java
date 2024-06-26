@@ -18,9 +18,6 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
     public void updateMemberPasswordByEmail(MemberUpdatePasswordDto memberUpdatePasswordDto, String email){
         QMember member = QMember.member;
 
-        System.out.println("password");
-        System.out.println(memberUpdatePasswordDto.getNewEncryptedPassword());
-
         queryFactory
         .update(member)
         .set(member.password, memberUpdatePasswordDto.getNewEncryptedPassword())

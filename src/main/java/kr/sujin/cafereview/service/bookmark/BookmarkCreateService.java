@@ -25,7 +25,6 @@ public class BookmarkCreateService {
 
         Optional<Bookmark> bookmark = bookmarkRepository.findByReviewIdAndUserEmail(bookmarkCreateDto.getReviewId(), email);
 
-        System.out.println(bookmark);
         if(bookmark.isPresent()){
             throw new IllegalStateException("이미 북마크된 리뷰입니다.");
         }

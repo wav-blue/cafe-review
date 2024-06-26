@@ -72,8 +72,6 @@ public class BookmarkController {
         try{
             bookmarkDeleteService.deleteBookmark(bookmarkId);
         } catch (EntityNotFoundException e){
-            System.out.println("e");
-            System.out.println(e);
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 

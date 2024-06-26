@@ -142,7 +142,6 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
 
         List<ReviewReadDto> content = results.getResults();
         long total = results.getTotal();
-        System.out.println(pageable);
         return new PageImpl<>(content, pageable, total);
     }
 
@@ -224,8 +223,6 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
         List<ReviewReadAdminDto> content = results.getResults();
 
         long total = results.getTotal();
-        System.out.println("total");
-        System.out.println(total);
         return new PageImpl<>(content, pageable, total);
     }
 
