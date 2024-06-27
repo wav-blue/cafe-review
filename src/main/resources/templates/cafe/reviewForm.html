@@ -145,7 +145,11 @@
       <h5>태그</h5>
       <div class="bg-light">
         <div class="ml-4 form-group" style="width: 1000px">
-          <div class="mr-5 mt-3" role="group" th:each="tagType : ${tagTypes}">
+          <div
+            class="btn-group mr-5 mt-3"
+            role="group"
+            th:each="tagType : ${tagTypes}"
+          >
             <input
               type="checkbox"
               th:field="*{tagTypes}"

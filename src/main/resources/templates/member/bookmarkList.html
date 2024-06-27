@@ -79,7 +79,7 @@
             <input type="hidden" id="bookmarkId" th:value="${bookmarkContent.id}" />
             <div class="col-md-4 margin">
                 <div class="card border-dark">
-                    <a th:href="'/review/' +${bookmarkContent.reviewId}" class="text-dark">
+                    <a th:href="'/review/' +${bookmarkContent.reviewId}" class="text-dark text-decoration-none">
                         <img th:src="${bookmarkContent.firstImgUrl}" class="card-img-top" th:alt="${bookmarkContent.menuNm}">
                         <div class="card-body">
                             <h4 class="card-title">[[${bookmarkContent.menuNm}]]</h4>

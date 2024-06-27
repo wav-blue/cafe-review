@@ -78,18 +78,18 @@
     <div class="row" style="margin-top: 30px">
       <th:block th:each="reviewContent, status: ${reviews.getContent()}">
           <div class="col-md-4 margin">
-              <div class="card">
-                  <a th:href="'/review/' +${reviewContent.id}" class="text-dark">
+              <a th:href="'/review/' +${reviewContent.id}"  class="card text-decoration-none">
+                  <div class="text-dark">
                       <div class="embed-responsive embed-responsive-4by3">
                           <img th:src="${reviewContent.imgUrl}" class="card-img-top embed-responsive-item" th:alt="${reviewContent.menuNm}">
                       </div>
-                      <div class="card-body">
+                      <div class="card-body text-decoration-none">
                           <h4 class="card-title">[[${reviewContent.menuNm}]]</h4>
                           <h5 class="card-title">[[${reviewContent.cafeNm}]]</h5>
                           <h5 class="text-rating">★ [[${reviewContent.rating}]]점</h5>
                       </div>
-                  </a>
-              </div>
+                  </div>
+              </a>
           </div>
       </th:block>
   </div>

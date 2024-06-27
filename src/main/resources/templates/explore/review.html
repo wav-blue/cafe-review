@@ -42,7 +42,7 @@
         <th:block th:each="reviewContent, status: ${reviews.getContent()}">
             <div class="col-md-4 margin">
                 <div class="card">
-                    <a th:href="'/review/' +${reviewContent.id}" class="text-dark">
+                    <a th:href="'/review/' +${reviewContent.id}" class="text-decoration-none text-dark">
                         <div class="embed-responsive embed-responsive-4by3">
                             <img th:src="${reviewContent.imgUrl}" class="card-img-top embed-responsive-item" th:alt="${reviewContent.menuNm}">
                         </div>
