@@ -53,12 +53,17 @@
 
 <img src = "./readme_image/explore.png" alt="조회">
 
+#### 리뷰 등록 페이지
+
+<img src = "./readme_image/reviewForm.png" alt="등록 페이지">
+
 #### 상세 페이지
 
 - 리뷰 수정, 삭제 (Soft delete)
 - 작성자에게만 노출되는 수정/삭제 버튼
 
-<img src = "./readme_image/detail.png" alt="상세 페이지">
+<img src = "./readme_image/reviewDetail1.png" alt="상세 페이지1">
+<img src = "./readme_image/reviewDetail2.png" alt="상세 페이지2">
 
 #### 북마크
 
@@ -80,7 +85,7 @@
 
 - JSP의 쿼리 메소드, querydsl 활용
 
-#### MVC 패턴 적용
+#### MVC 패턴 활용
 
 <img src = "./readme_image/mvcPattern.png" alt="MVC">
 
