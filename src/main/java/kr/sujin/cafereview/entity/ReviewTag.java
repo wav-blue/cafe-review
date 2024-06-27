@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import kr.sujin.cafereview.lib.constant.TagType;
+
 
 @Entity
 @Table(name="review_tag")
@@ -20,9 +22,9 @@ public class ReviewTag {
     private Long reviewId;
 
     @Column(name="tag_type")
-    private String tagType;
+    private TagType tagType;
 
-    public static ReviewTag createReviewTag(Long reviewId, String tagType){
+    public static ReviewTag createReviewTag(Long reviewId, TagType tagType){
         ReviewTag reviewTag = new ReviewTag();
         reviewTag.reviewId = reviewId;
         reviewTag.tagType = tagType;

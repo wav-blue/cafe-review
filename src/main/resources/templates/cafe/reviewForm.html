@@ -142,25 +142,22 @@
         ></textarea>
       </div>
 
-      <div class="form-group" th:if="${#strings.isEmpty(reviewFormDto.id)}">
-        <h5>태그</h5>
-        <div
-          class="btn-group mr-2"
-          style="margin: 7px 0"
-          role="group"
-          th:each="tagType : ${tagTypes}"
-        >
-          <input
-            type="checkbox"
-            th:field="*{tagTypes}"
-            th:value="${tagType}"
-            class="form-check-input"
-          />
-          <label
-            th:for="${#ids.prev('tagTypes')}"
-            th:text="${tagType.label}"
-            class="form-check-label"
-          ></label>
+      <h5>태그</h5>
+      <div class="bg-light">
+        <div class="ml-4 form-group" style="width: 1000px">
+          <div class="mr-5 mt-3" role="group" th:each="tagType : ${tagTypes}">
+            <input
+              type="checkbox"
+              th:field="*{tagTypes}"
+              th:value="${tagType}"
+              class="form-check-input col"
+            />
+            <label
+              th:for="${#ids.prev('tagTypes')}"
+              th:text="${tagType.label}"
+              class="form-check-label"
+            ></label>
+          </div>
         </div>
       </div>
 

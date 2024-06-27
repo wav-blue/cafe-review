@@ -140,7 +140,6 @@ public class ReviewController {
             ReviewFormDto reviewFormDto = reviewUpdateService.getReviewDetail(reviewId);
             model.addAttribute("reviewFormDto", reviewFormDto);
             model.addAttribute("cafeRegion", CafeRegion.values());
-            model.addAttribute("tagType", TagType.values());
         } catch (EntityNotFoundException e){
             model.addAttribute("errorMessage", "존재하지 않는 리뷰입니다.");
             model.addAttribute("reviewFormDto", new ReviewFormDto());

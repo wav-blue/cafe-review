@@ -1,6 +1,7 @@
 package kr.sujin.cafereview.repository;
 
 import kr.sujin.cafereview.entity.ReviewTag;
+import kr.sujin.cafereview.lib.constant.TagType;
 
 import java.util.List;
 

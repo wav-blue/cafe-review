@@ -45,7 +45,7 @@ public class ReviewFormDto {
     private CafeRegion cafeRegion;
 
     @Nullable
-    private List<String> tagTypes = Collections.emptyList();
+    private List<TagType> tagTypes = Collections.emptyList();
 
     //음료를 저장한 후 수정할 때 이미지 정보를 저장
     private List<ReviewImgDto> reviewImgDtoList = new ArrayList<>();
