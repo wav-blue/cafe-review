@@ -114,9 +114,10 @@ public class ReviewController {
         } else{
             reviews = reviewReadService.getReviewByRegionWithPaging(pageable, principal.getName());
         }
-        
+
         model.addAttribute("reviews", reviews);
-        model.addAttribute("maxPage", 3);
+        model.addAttribute("maxPage", reviews.getPageable().getPageSize());
+
         return "explore/review";
     }
 
@@ -127,7 +128,7 @@ public class ReviewController {
         Page<ReviewReadDto> reviews =
             reviewReadService.getReviewWithPagingBySearch(reviewSearchDto, pageable);
         model.addAttribute("reviews", reviews);
-        model.addAttribute("maxPage", 3);
+        model.addAttribute("maxPage", reviews.getPageable().getPageSize());
         model.addAttribute("cafeRegion", CafeRegion.values());
         return "explore/reviewSearch";
     }
