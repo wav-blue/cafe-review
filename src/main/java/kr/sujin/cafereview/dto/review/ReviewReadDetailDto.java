@@ -8,7 +8,9 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 
 import kr.sujin.cafereview.lib.constant.CafeRegion;
+import kr.sujin.cafereview.lib.constant.TagType;
 import kr.sujin.cafereview.entity.Review;
+import kr.sujin.cafereview.entity.ReviewTag;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +35,9 @@ public class ReviewReadDetailDto {
 
     // 이미지 정보
     private List<ReviewImgDto> reviewImgDtoList = new ArrayList<>();
+
+    // 태그 정보
+    private List<TagType> reviewTagList = new ArrayList<>();
 
     // 날짜 정보
     private LocalDateTime createdDate;

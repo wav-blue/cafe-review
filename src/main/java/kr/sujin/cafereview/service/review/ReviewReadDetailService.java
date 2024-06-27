@@ -12,10 +12,13 @@ import kr.sujin.cafereview.dto.member.MemberReadWriterDto;
 import kr.sujin.cafereview.service.member.MemberReadService;
 import kr.sujin.cafereview.repository.ReviewImgRepository;
 import kr.sujin.cafereview.repository.ReviewRepository;
+import kr.sujin.cafereview.repository.ReviewTagRepository;
 import kr.sujin.cafereview.dto.review.ReviewImgDto;
 import kr.sujin.cafereview.dto.review.ReviewReadDetailDto;
 import kr.sujin.cafereview.entity.Review;
 import kr.sujin.cafereview.entity.ReviewImg;
+import kr.sujin.cafereview.entity.ReviewTag;
+import kr.sujin.cafereview.lib.constant.TagType;
 import lombok.RequiredArgsConstructor;
 
 @Transactional(readOnly = true)
@@ -26,6 +29,7 @@ public class ReviewReadDetailService {
     private final ReviewRepository reviewRepository;
     private final ReviewImgRepository reviewImgRepository;
     private final MemberReadService memberReadService;
+    private final ReviewTagRepository reviewTagRepository;
 
     public ReviewReadDetailDto getReviewDetail(Long reviewId){
         
@@ -43,6 +47,17 @@ public class ReviewReadDetailService {
             reviewImgDtoList.add(reviewImgDto);
         }
         reviewReadDetailDto.setReviewImgDtoList(reviewImgDtoList);
+
+        // ReviewTag 조회
+        List<ReviewTag> reviewTagList = reviewTagRepository.findByReviewId(reviewId);
+
+        List<TagType> reviewTagTypeList = new ArrayList<>();
+
+        for(var i = 0 ; i < reviewTagList.size(); i++){
+            reviewTagTypeList.add(reviewTagList.get(i).getTagType());
+        }
+        reviewReadDetailDto.setReviewTagList(reviewTagTypeList);
+        System.out.println(reviewReadDetailDto.getReviewTagList());
 
         // 작성자 조회
         var writerEmail = reviewReadDetailDto.getEmail();

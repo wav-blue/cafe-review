@@ -130,18 +130,20 @@
           />
         </div>
         <div class="wd50">
-          <span th:if="${review.id}" class="badge badge-primary mgb-15">
-            > 커피
-          </span>
-          <span th:if="${review.id}" class="badge badge-primary mgb-15">
-            스무디
-          </span>
-
           <hr class="my-4" />
           <div class="h5" th:text="${review.cafeNm}"></div>
           <div class="h4" th:text="${review.menuNm}"></div>
           <div class="p" th:text="${'지역: '+review.cafeRegion.label()}"></div>
-
+          <div class="mt-4 text-secondary">
+            <div
+              class="p"
+              th:text="${#temporals.format(review.createdDate, 'yyyy년 MM월 dd일 HH:MM' + ' 작성')}"
+            ></div>
+            <div
+              class="p"
+              th:text="${#temporals.format(review.lastModifiedDate, 'yyyy년 MM월 dd일 HH:MM'+ ' 수정')}"
+            ></div>
+          </div>
           <hr class="my-4" />
           <button type="button" class="btn btn-success" onclick="addBookmark()">
             <svg
@@ -184,27 +186,37 @@
     <div class="jumbotron jumbotron-fluid mgt-30">
       <div class="container">
         <h4 class="display-5">상세 리뷰</h4>
+
         <hr class="my-4" />
         <p class="lead" th:text="${review.reviewDetail}"></p>
-        <hr class="my-4" />
-        <div
-          class="p"
-          th:text="${'등록일자: '+#temporals.format(review.lastModifiedDate, 'yyyy년 MM월 dd일 HH:MM')}"
-        ></div>
-        <div
-          class="p"
-          th:text="${'수정일자: '+#temporals.format(review.lastModifiedDate, 'yyyy년 MM월 dd일 HH:MM')}"
-        ></div>
-      </div>
-    </div>
 
-    <div th:each="reviewImg : ${review.reviewImgDtoList}" class="text-center">
-      <img
-        th:if="${not #strings.isEmpty(reviewImg.imgUrl)}"
-        th:src="${reviewImg.imgUrl}"
-        class="rounded mgb-15"
-        width="800"
-      />
+        <div class="row row-cols-auto">
+          <div class="col m-1" th:each="tag : ${review.reviewTagList}">
+            <button
+              type="button"
+              class="btn btn-info"
+              th:text="${tag.label}"
+              th:onclick="|location.href='@{/review/search?(tagType=${tag.name})}'|"
+            ></button>
+          </div>
+        </div>
+
+        <hr class="my-4" />
+        <div>
+          <h3>상세 이미지</h3>
+          <div
+            th:each="reviewImg : ${review.reviewImgDtoList}"
+            class="text-center"
+          >
+            <img
+              th:if="${not #strings.isEmpty(reviewImg.imgUrl)}"
+              th:src="${reviewImg.imgUrl}"
+              class="rounded mgb-15"
+              width="800"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </html>
