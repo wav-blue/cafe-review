@@ -37,7 +37,6 @@
 - 로그인 유저만 접근 가능한 페이지 설정
 - 로그인 유저 정보 확인 (마이페이지)
 - 비밀번호 변경
-- Spring Security
 
 <img src = "./readme_image/register.png" alt="회원가입">
 
@@ -71,7 +70,7 @@
 - 유저가 북마크한 목록 조회
 - 북마크 삭제
 
-<img src = "./readme_image/bookmark.png" alt="북마크">
+<img src = "./readme_image/bookmarkList.png" alt="북마크">
 
 #### 권한 기능
 
