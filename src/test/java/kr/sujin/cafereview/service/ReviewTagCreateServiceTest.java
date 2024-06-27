@@ -43,9 +43,9 @@ public class ReviewTagCreateServiceTest {
     void saveReviewTag() throws Exception{
         String userEmail = "testEmail1@exam.com";
 
-        List<String> testTagList = new ArrayList<>();
-        testTagList.add("DRINK_TASTE");
-        // testTagList.add("DESSERT_TASTE");
+        List<TagType> testTagList = new ArrayList<>();
+        testTagList.add(TagType.DRINK_TASTE);
+        testTagList.add(TagType.DESSERT_TASTE);
 
         Long reviewId = Long.valueOf(22);
 
@@ -57,7 +57,8 @@ public class ReviewTagCreateServiceTest {
         if (reviewTagResults == null){
             fail("Review Tag Create Failed");
         }
-        assertEquals(reviewTagResults.get(0).getTagType(), "DRINK_TASTE");
+        assertEquals(reviewTagResults.get(0).getTagType(), TagType.DRINK_TASTE);
+        assertEquals(reviewTagResults.get(1).getTagType(), TagType.DESSERT_TASTE);
     }
 
 }
