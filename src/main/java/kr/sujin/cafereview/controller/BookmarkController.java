@@ -56,11 +56,15 @@ public class BookmarkController {
     public String getBookmarkWithPaging(Optional<Integer> page, Model model){
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() - 1 : 0, 6);
 
+        // 현재 유저 정보
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = userDetails.getUsername();
 
+        // Bookmark 조회
         Page<BookmarkReadDto> bookmarks = bookmarkReadService.readBookmarkWithPaging(email, pageable);
+
+        // model에 담아 전달
         model.addAttribute("bookmarks", bookmarks);
         model.addAttribute("maxPage", bookmarks.getPageable().getPageSize());
         return "member/bookmarkList";
