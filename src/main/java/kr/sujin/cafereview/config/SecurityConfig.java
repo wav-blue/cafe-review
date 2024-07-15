@@ -4,7 +4,6 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,7 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // 인증이 필요한 요청폼 설정
         http.formLogin()
                 .loginPage("/members/login")
@@ -46,22 +45,18 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
+    WebSecurityCustomizer webSecurityCustomizer() {
         return web -> {
             web.ignoring()
                     .antMatchers(
                             "/about", "/search", "/explore"
-                    );
+                    ).requestMatchers(PathRequest.toStaticResources().atCommonLocations());
         };
     }
 
-    /*@Override
-    public void configure(WebSecurity web) throws Exception{
-        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-    }*/
 }
