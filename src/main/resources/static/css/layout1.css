@@ -4,7 +4,13 @@
   src: local(※), url(NanumGothic.woff) format(‘woff’);
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
+  min-height: 100%;
   /* font-family: "나눔고딕", "NanumGothic", ng; */
   font-family: "Gothic A1", sans-serif;
 }
@@ -13,9 +19,6 @@ html {
   position: relative;
   min-height: 100%;
   margin: 0;
-}
-body {
-  min-height: 100%;
 }
 
 .footer {
