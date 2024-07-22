@@ -29,7 +29,7 @@ public class ReviewUpdateService {
     private final ReviewRepository reviewRepository;
     private final ReviewImgRepository reviewImgRepository;
     private final FileService fileService;
-    private final ReviewImgService reviewImgService;
+    private final ReviewImgUpdateService reviewImgUpdateService;
 
     // 수정을 위한 조회
     @Transactional(readOnly = true)
@@ -78,7 +78,7 @@ public class ReviewUpdateService {
         List<Long> reviewImgIds = reviewFormDto.getReviewImgIds();
 
         for(int i = 0; i < reviewImgFileList.size(); i++){
-            reviewImgService.updateReviewImg(reviewImgIds.get(i), 
+            reviewImgUpdateService.updateReviewImg(reviewImgIds.get(i), 
             reviewImgFileList.get(i));
         }
 

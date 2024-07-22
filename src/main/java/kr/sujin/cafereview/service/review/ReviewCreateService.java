@@ -17,21 +17,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewCreateService {
     private final ReviewRepository reviewRepository;
-    private final ReviewImgService reviewImgService;
+    private final ReviewImgCreateService reviewImgCreateService;
     private final ReviewTagCreateService reviewTagCreateService;
 
     public Long createReview(ReviewFormDto reviewFormDto, 
     List<MultipartFile> reviewImgFileList, String email) throws Exception{
         reviewFormDto.setEmail(email);
 
-        // 리뷰 등록
+        // 리뷰 생성
         Review review = reviewFormDto.createReview();
         reviewRepository.save(review);
 
-        //이미지 등록
-        reviewImgService.createReviewImgs(reviewImgFileList, review);
+        //리뷰 이미지 생성
+        reviewImgCreateService.createReviewImgs(reviewImgFileList, review);
 
-        // 리뷰 태그 등록
+        // 리뷰 태그 생성
         reviewTagCreateService.createReviewTags(reviewFormDto.getTagTypes(), review.getId());
 
         return review.getId();
