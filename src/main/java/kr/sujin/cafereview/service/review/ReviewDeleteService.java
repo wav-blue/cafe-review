@@ -30,7 +30,7 @@ public class ReviewDeleteService {
     }
 
     public void deleteReviewByAdmin(Long reviewId, String email){
-        // 이미 삭제된 않는 리뷰 -> EntityNotFoundException
+        // 이미 삭제된 리뷰 -> EntityNotFoundException
         reviewRepository.findByIdAndDeletedDateIsNull(reviewId).orElseThrow(EntityNotFoundException::new);
 
         // softDelete
