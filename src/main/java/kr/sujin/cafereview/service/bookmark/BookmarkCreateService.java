@@ -4,6 +4,7 @@ import kr.sujin.cafereview.repository.BookmarkRepository;
 import kr.sujin.cafereview.dto.bookmark.BookmarkCreateDto;
 import kr.sujin.cafereview.entity.Bookmark;
 import kr.sujin.cafereview.entity.Review;
+import kr.sujin.cafereview.lib.exception.AlreadyExistBookmarkException;
 import kr.sujin.cafereview.service.review.ReviewReadService;
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +27,7 @@ public class BookmarkCreateService {
         Optional<Bookmark> bookmark = bookmarkRepository.findByReviewIdAndUserEmail(bookmarkCreateDto.getReviewId(), email);
 
         if(bookmark.isPresent()){
-            throw new IllegalStateException("이미 북마크된 리뷰입니다.");
+            throw new AlreadyExistBookmarkException("이미 북마크된 리뷰입니다.");
         }
 
         Bookmark newBookmark = Bookmark.createBookmark(bookmarkCreateDto, email, review);

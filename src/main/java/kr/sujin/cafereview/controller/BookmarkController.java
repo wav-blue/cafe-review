@@ -1,7 +1,6 @@
 package kr.sujin.cafereview.controller;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -43,12 +42,15 @@ public class BookmarkController {
     private final BookmarkDeleteService bookmarkDeleteService;
 
     @PostMapping(value = "/new")
-    public ResponseEntity<Long> postCreateReviewForm(@RequestBody @Valid BookmarkCreateDto bookmarkCreateDto, Principal principal){
+    public ResponseEntity postCreateReviewForm(@RequestBody @Valid BookmarkCreateDto bookmarkCreateDto, Principal principal){
 
         String email = principal.getName();
-        
-        Long reviewId = bookmarkCreateService.addBookmark(bookmarkCreateDto, email);
-
+        Long reviewId;
+        try{
+             reviewId = bookmarkCreateService.addBookmark(bookmarkCreateDto, email);
+        } catch (Exception e){
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.CONFLICT);
+        }
         return new ResponseEntity<Long>(reviewId, HttpStatus.OK);
     }
 
