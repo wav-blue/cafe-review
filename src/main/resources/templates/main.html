@@ -4,6 +4,11 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{layouts/layout1}"
 >
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+  <style>
+  </style>
+</th:block>
   <div layout:fragment="content">
     <div class="title flex-column">
       <div class="flex-row">
@@ -102,7 +107,7 @@
                   <div class="col-md-4 margin">
                     <a th:href="'/review/' +${review.id}" class="text-dark">
                       <p th:text="${review.cafeNm}"></p>
-                      <img th:src="${review.imgUrl}" class="img-thumbnail" th:alt="user_image">
+                      <img th:src="${review.imgUrl}" class="img-main-random" th:alt="user_image">
                       
                     </a>
                   </div>

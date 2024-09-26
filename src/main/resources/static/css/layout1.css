@@ -105,3 +105,12 @@ a:hover {
 .card-img-top {
   height: 18rem;
 }
+
+.img-main-random {
+  width: 230px;
+  height: 180px;
+  object-fit: cover;
+  padding: 0.25rem;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+}

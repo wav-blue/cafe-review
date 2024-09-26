@@ -97,17 +97,18 @@
       }
       .repImgDiv {
         margin-right: 30px;
-        height: 400px;
-        width: 60%;
       }
       .repImg {
-        width: 100%;
-        height: 100%;
+        height: 400px;
+        width: 400px;
         object-fit: cover;
       }
+      .detailImg {
+        width: 100%;
+      }
       .wd50 {
-        height: auto;
         width: 50%;
+        height: auto;
       }
     </style>
   </th:block>
@@ -211,7 +212,7 @@
             <img
               th:if="${not #strings.isEmpty(reviewImg.imgUrl)}"
               th:src="${reviewImg.imgUrl}"
-              class="rounded mgb-15"
+              class="rounded mgb-15 detailImg"
               width="800"
             />
           </div>
