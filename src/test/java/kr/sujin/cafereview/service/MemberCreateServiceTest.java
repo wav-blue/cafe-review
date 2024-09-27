@@ -14,6 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.sujin.cafereview.lib.constant.CafeRegion;
+import kr.sujin.cafereview.lib.constant.Role;
 import kr.sujin.cafereview.repository.MemberRepository;
 import kr.sujin.cafereview.service.member.MemberCreateService;
 import kr.sujin.cafereview.dto.member.MemberFormDto;
@@ -43,7 +44,7 @@ public class MemberCreateServiceTest {
         memberFormDto.setEmail(testEmail);
         memberFormDto.setPassword(testPassword);
         memberFormDto.setAddress("테스트 주소");
-        memberFormDto.setIsAdmin(false);
+        memberFormDto.setRole(Role.USER);
         memberFormDto.setRecommendRegion(null);
 
         Optional<Member> alreadyMember =  memberRepository.findByEmail(testEmail);
@@ -81,7 +82,7 @@ public class MemberCreateServiceTest {
         memberFormDto.setEmail(testEmail);
         memberFormDto.setPassword(testPassword);
         memberFormDto.setAddress("테스트 주소");
-        memberFormDto.setIsAdmin(true);
+        memberFormDto.setRole(Role.ADMIN);
         memberFormDto.setRecommendRegion(CafeRegion.BUSAN);
 
         Optional<Member> alreadyMember =  memberRepository.findByEmail(testEmail);

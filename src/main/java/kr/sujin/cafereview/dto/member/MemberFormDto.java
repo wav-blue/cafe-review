@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import groovyjarjarantlr4.v4.runtime.misc.Nullable;
 import kr.sujin.cafereview.lib.constant.CafeRegion;
+import kr.sujin.cafereview.lib.constant.Role;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -29,7 +30,7 @@ public class MemberFormDto {
     @Nullable
     private String address;
 
-    private Boolean isAdmin;
+    private Role role;
 
     @Nullable
     private CafeRegion recommendRegion;

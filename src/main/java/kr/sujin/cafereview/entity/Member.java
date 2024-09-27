@@ -50,11 +50,7 @@ public class Member extends BaseEntity {
         member.setAddress(memberFormDto.getAddress());
         String password = passwordEncoder.encode(memberFormDto.getPassword());
         member.setRecommendRegion(CafeRegion.BUSAN);
-        if(memberFormDto.getIsAdmin()){
-            member.setRole(Role.ADMIN);
-        } else{
-            member.setRole(Role.USER);
-        }
+        member.setRole(memberFormDto.getRole());
         member.setPassword(password);
         return member;
     }
