@@ -78,20 +78,14 @@
 
 <img src = "./readme_image/admin.png" alt="관리자">
 
-##
+#### 인증, 인가
+
+- Spring Security 사용
 
 #### 데이터베이스 접근
 
 - JSP의 쿼리 메소드, querydsl 활용
 
-#### MVC 패턴 활용
-
-<img src = "./readme_image/mvcPattern.png" alt="MVC">
-
 #### 테스트 코드
 
 - Service의 단위 테스트로 비즈니스 로직의 동작을 확인
-
-<br/>
-
-> '웹 프로그래밍' 강의에서 과제로 작성하였던 코드를 전체적으로 리팩토링하여 새로 커밋했습니다.
