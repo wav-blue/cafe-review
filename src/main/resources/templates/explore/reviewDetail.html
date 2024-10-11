@@ -130,8 +130,7 @@
             th:alt="${review.menuNm}"
           />
         </div>
-        <div class="wd50">
-          <hr class="my-4" />
+        <div class="mt-5">
           <div class="h5" th:text="${review.cafeNm}"></div>
           <div class="h4" th:text="${review.menuNm}"></div>
           <div class="p" th:text="${'지역: '+review.cafeRegion.label()}"></div>
@@ -145,7 +144,6 @@
               th:text="${#temporals.format(review.lastModifiedDate, 'yyyy년 MM월 dd일 HH:MM'+ ' 수정')}"
             ></div>
           </div>
-          <hr class="my-4" />
           <button type="button" class="btn btn-success" onclick="addBookmark()">
             <svg
               xmlns="http://www.w3.org/2000/svg"
