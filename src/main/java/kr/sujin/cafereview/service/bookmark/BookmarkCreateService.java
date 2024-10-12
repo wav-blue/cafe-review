@@ -10,14 +10,19 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class BookmarkCreateService {
+    
     private final BookmarkRepository bookmarkRepository;
     private final ReviewReadService reviewReadService;
+
+    private static final Logger log = LoggerFactory.getLogger(BookmarkCreateService.class);
 
     public Long addBookmark(BookmarkCreateDto bookmarkCreateDto, String email){
         
@@ -27,6 +32,7 @@ public class BookmarkCreateService {
         Optional<Bookmark> bookmark = bookmarkRepository.findByReviewIdAndUserEmail(bookmarkCreateDto.getReviewId(), email);
 
         if(bookmark.isPresent()){
+            log.debug("Already bookmarked");
             throw new AlreadyExistBookmarkException("이미 북마크된 리뷰입니다.");
         }
 
