@@ -1,5 +1,8 @@
 package kr.sujin.cafereview.repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -10,21 +13,21 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class RedisRepositoryCustomImpl implements RedisRepository {
-    private final RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
  
     @Override
-    public void setValues(String key, String value) {
-        ValueOperations<String, String> values = redisTemplate.opsForValue();
+    public void setValues(String key, Object value) {
+        ValueOperations<String, Object> values = redisTemplate.opsForValue();
         values.set(key, value);
     }
 
     @Override
-    public String getValues(String key){
-        ValueOperations<String, String> values = redisTemplate.opsForValue();
+    public Object getValues(String key){
+        ValueOperations<String, Object> values = redisTemplate.opsForValue();
         if (values.get(key) == null) {
-            return "";
+            return new ArrayList<>();
         }
-        return values.get(key);
+        return (List<Long>) values.get(key);
     }
  
     @Override
