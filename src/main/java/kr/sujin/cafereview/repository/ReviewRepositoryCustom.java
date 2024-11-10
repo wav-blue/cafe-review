@@ -18,6 +18,8 @@ public interface ReviewRepositoryCustom {
 
     List<ReviewReadRandomDto> getReviewByRandom(Integer number);
     
+    List<ReviewReadRandomDto> getReviewByRandomIds(List<Long> reviewIds);
+    
     void softDeleteByReviewId(Long reviewId, Boolean byAdmin);
 
     void updateDeletedStatusToCreatedAndDeletedDateToNull(Long reviewId);

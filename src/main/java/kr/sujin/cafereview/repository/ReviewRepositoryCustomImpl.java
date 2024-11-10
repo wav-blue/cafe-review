@@ -171,6 +171,32 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
         return content;
     }
 
+    
+    @Override
+    public List<ReviewReadRandomDto> getReviewByRandomIds(List<Long> reviewIds){
+        QReview review = QReview.review;
+        QReviewImg reviewImg = QReviewImg.reviewImg;
+
+        QueryResults<ReviewReadRandomDto> results = queryFactory
+        .select(
+            new QReviewReadRandomDto(
+                review.id,
+                review.cafeNm,
+                reviewImg.imgUrl
+            )
+        )
+        .from(reviewImg)
+        .join(reviewImg.review, review)
+        .where(review.id.in(reviewIds))
+        .where(reviewImg.isThumbnail.isTrue())
+        .limit(3)
+        .fetchResults();
+
+
+        List<ReviewReadRandomDto> content = results.getResults();
+        return content;
+    };
+
     @Override
     public void softDeleteByReviewId(Long reviewId, Boolean byAdmin){
         QReview review = QReview.review;
