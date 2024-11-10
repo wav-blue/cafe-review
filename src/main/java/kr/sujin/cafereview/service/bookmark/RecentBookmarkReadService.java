@@ -34,11 +34,15 @@ public class RecentBookmarkReadService {
         if(reviewIds.length()==0){
             return castReviewIds;
         }
+        Integer temp = 0;
         for(String e: reviewIds.split(" ")){
             if(castReviewIds.containsKey(Long.valueOf(e))){
-                castReviewIds.put(Long.valueOf(e), castReviewIds.get(e)+1);
+                temp = castReviewIds.get(Long.valueOf(e));
+
+                castReviewIds.put(Long.valueOf(e), temp+1);
+            } else{
+                castReviewIds.put(Long.valueOf(e), 1);
             }
-            castReviewIds.put(Long.valueOf(e), 1);
         }
         return castReviewIds;
     }
