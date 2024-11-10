@@ -1,9 +1,9 @@
 package kr.sujin.cafereview.repository;
 
 public interface RedisRepository {
-    void setValues(String key, Object value);
+    void setValues(String key, String value);
 
-    Object getValues(String key);
+    String getValues(String key);
  
     void deleteValue(String key);
 }

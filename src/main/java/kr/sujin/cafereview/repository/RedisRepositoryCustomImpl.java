@@ -13,21 +13,21 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class RedisRepositoryCustomImpl implements RedisRepository {
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
  
     @Override
-    public void setValues(String key, Object value) {
-        ValueOperations<String, Object> values = redisTemplate.opsForValue();
+    public void setValues(String key, String value) {
+        ValueOperations<String, String> values = redisTemplate.opsForValue();
         values.set(key, value);
     }
 
     @Override
-    public Object getValues(String key){
-        ValueOperations<String, Object> values = redisTemplate.opsForValue();
+    public String getValues(String key){
+        ValueOperations<String, String> values = redisTemplate.opsForValue();
         if (values.get(key) == null) {
-            return new ArrayList<>();
+            return "";
         }
-        return (List<Long>) values.get(key);
+        return values.get(key);
     }
  
     @Override
