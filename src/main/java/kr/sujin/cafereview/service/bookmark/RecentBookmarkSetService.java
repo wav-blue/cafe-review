@@ -14,10 +14,9 @@ public class RecentBookmarkSetService {
     private final RecentBookmarkReadService recentBookmarkReadService;
 
     public void setRecentBookmarkReviews(Long reviewId){
-        System.out.println(reviewId);
         List<Long> reviewIdList = recentBookmarkReadService.readRecentBookmarkReviewIds();
         
-        if(reviewIdList.size() < 5){
+        if(reviewIdList.size() < 20){
             reviewIdList.add(reviewId);
         } else{
             reviewIdList.remove(0);
@@ -32,10 +31,8 @@ public class RecentBookmarkSetService {
         }
         String value = reviewIdList.get(0).toString();
         for(int i = 1 ; i < reviewIdList.size() ; i++){
-            System.out.println("현재 value: " + value);
             value = value + " " + reviewIdList.get(i).toString();
         }
-        System.out.println("최종 value: " + value);
         return value;
     }
 
