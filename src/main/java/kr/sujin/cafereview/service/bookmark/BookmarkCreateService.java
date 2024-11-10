@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class BookmarkCreateService {
     
     private final BookmarkRepository bookmarkRepository;
     private final ReviewReadService reviewReadService;
+    private final RecentBookmarkSetService recentBookmarkSetService;
 
     private static final Logger log = LoggerFactory.getLogger(BookmarkCreateService.class);
 
@@ -35,6 +37,9 @@ public class BookmarkCreateService {
             log.debug("Already bookmarked");
             throw new AlreadyExistBookmarkException("이미 북마크된 리뷰입니다.");
         }
+
+        // 최근 북마크된 리뷰 리스트에 추가(Redis)
+        recentBookmarkSetService.setRecentBookmarkReviews(bookmarkCreateDto.getReviewId());
 
         Bookmark newBookmark = Bookmark.createBookmark(bookmarkCreateDto, email, review);
         bookmarkRepository.save(newBookmark);
