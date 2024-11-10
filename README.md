@@ -27,7 +27,7 @@
 
 #### 메인 페이지
 
-- 리뷰 랜덤 조회
+- 최근 많이 북마크된 리뷰 3개
 
 <img src = "./readme_image/main.png" alt="메인">
 
@@ -69,6 +69,7 @@
 - 북마크 추가
 - 유저가 북마크한 목록 조회
 - 북마크 삭제
+- 최근 많이 북마크된 리뷰를 메인에 표시
 
 <img src = "./readme_image/bookmarkList.png" alt="북마크">
 
