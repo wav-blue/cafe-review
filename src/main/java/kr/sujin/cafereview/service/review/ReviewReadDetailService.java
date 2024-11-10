@@ -57,7 +57,6 @@ public class ReviewReadDetailService {
             reviewTagTypeList.add(reviewTagList.get(i).getTagType());
         }
         reviewReadDetailDto.setReviewTagList(reviewTagTypeList);
-        System.out.println(reviewReadDetailDto.getReviewTagList());
 
         // 작성자 조회
         var writerEmail = reviewReadDetailDto.getEmail();

@@ -2,7 +2,7 @@ package kr.sujin.cafereview;
 
 import groovy.util.logging.Slf4j;
 import kr.sujin.cafereview.dto.review.ReviewReadRandomDto;
-import kr.sujin.cafereview.service.review.ReviewReadService;
+import kr.sujin.cafereview.service.review.ReviewReadPopularService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class MainController {
 
-    private final ReviewReadService reviewReadService;
+    private final ReviewReadPopularService reviewReadPopularService;
 
     @GetMapping("/")
     public String index(Model model){
-        List<ReviewReadRandomDto> reviews = reviewReadService.getReviewByRandom(3);
+        List<ReviewReadRandomDto> reviews = reviewReadPopularService.getRecentBookmarkReviews(3);
         model.addAttribute("reviews", reviews);
         return "main";
     }
